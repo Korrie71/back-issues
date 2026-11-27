@@ -827,7 +827,7 @@ const QS = [
   react:[`Aster. F. Aster, works desk.`]},
  {id:"q13",ch:4,sum:"A guard split Aster's left eyebrow.",a:"left eyebrow",t:`A guard gave F. a scar. Where on the face?`,ans:["eyebrow","brow","lefteyebrow","leftbrow","theeyebrow","thelefteyebrow","theleftbrow","eyebrows","onthelefteyebrow","ontheeyebrow"],
   h:[`The newspaper printed a picture of its night desk. Type: <b>NEWSROOM</b>`,`Read page <b>602</b> to the end.`],
-  react:[`A split left eyebrow. "It will scar."`,`Your hand goes to your face before you can stop it.`]},
+  react:[`A split left eyebrow. "It will scar."`,`Your hand goes to your face before you can stop it.`,`And the second face from the left, R. Achebe. You have seen that face. On Saturday night, under a grey blanket, lifting one hand.`]},
  {id:"q12",ch:4,sum:"Aster was taken from flat 4-12.",a:"4-12",t:`Which flat was F. taken from in Q.Y. 11?`,ans:["412","flat412"],
   h:[`The Bulletin reported the night the agitator was taken. Type: <b>AGITATOR</b>`,`Open page <b>261</b>, then press the <b>YELLOW</b> key.`],
   react:[`4-12.`,`You write it down. Then you look at it for a long time.`,`<b>4-12 is your flat.</b>`]},
@@ -1120,7 +1120,8 @@ function artLines(id, night){
 const pic = pl => ["raw", artLines(pl, HERE.night)];
 /* the map of Vessen: the numbers on it are the numbers in the list underneath, and [ ] is where you are standing */
 const MAPPOS = {harbour:[1, 5], housing:[1, 19], square:[2, 13], rr:[2, 23], home:[3, 5], row:[3, 11], press:[4, 26], east:[2, 33]};
-function cityLines(list, here){
+const VAN = {THU:[2, 35], FRI:[2, 32], SAT:[2, 27], SUN:[2, 18], MON:[3, 15], TUE:[3, 14], WED:[3, 8]}, DAYSLEFT = {THU:6, FRI:5, SAT:4, SUN:3, MON:2, TUE:1, WED:0};
+function cityLines(list, here, day){
   const ls = [];
   for (let r = 0; r < 5; r++){
     const l = line(K);
@@ -1139,6 +1140,7 @@ function cityLines(list, here){
     [c - 1, c, c + 1].forEach(k => { l[k] = {ch:" ", fg:W, bg:K, mo:-1}; });
     l[c].ch = String(i + 1); l[c].fg = Y; if (p === here){ l[c - 1].ch = "["; l[c + 1].ch = "]"; }
   });
+  if (VAN[day]){ const [r, c] = VAN[day]; ls[r][c] = {ch:" ", fg:R, bg:K, mo:63, fl:1}; }      /* nothing says what the red mark is */
   return ls;
 }
 
@@ -1216,7 +1218,7 @@ function compose(){
     if (P){
       /* where you are: a bar in the colours of the place on every screen, and a stripe of the same colour down the left edge (dotted at night) */
       const dark = V.night && P.out, bl = line(dark ? B : P.bg), fg = dark ? W : P.fg, t = V.when || "";
-      wr(bl, 1, P.name, fg); wr(bl, COLS - 1 - t.length, t, fg); SCR[1] = bl;
+      wr(bl, 1, P.name, fg); wr(bl, COLS - 1 - t.length, t, fg); if (V.mid) wr(bl, 9, V.mid, dark ? Y : fg); SCR[1] = bl;
       if (P.col != null) for (let y = 2; y <= PH; y++){ const q = SCR[y][0]; if (q.mo < 0 && q.ch === " " && !q.bg) SCR[y][0] = {ch:" ", fg:dark ? B : P.col, bg:K, mo:21, sep:V.night ? 1 : 0}; }
     }
     const n = V.pages.length, t = n > 1 && !V.alt ? `${V.sub + 1}/${n}` : "";
@@ -1398,6 +1400,7 @@ function notebookSpec(){
   const c0 = CH[S.ch], cur = curQ(), d = [["dh", Y, `DAY ${S.day}  ${c0.t.toUpperCase()}`], ["p", c0.o, C], ["gap"], ["p", "<b>TODAY'S QUESTIONS</b>"]];
   avail(S.ch).forEach(x => { if (S.solved[x.id]) d.push(["p", `<g>\u2713</g> ${x.sum}`]); else if (x === cur) d.push(["p", `<b>\u2192 ${x.t}</b>`]); else d.push(["p", "<c>- not yet</c>"]); });
   d.push(["gap"], ["p", "<c>Type the answer on any page. Stuck? Press the BLUE key for a hint.</c>"]);
+  d.push(["brk"], ["dh", Y, "FOR CERTAIN"], ["gap"]); truthLines(S.ch - 1 + (avail(S.ch).every(x => S.solved[x.id]) && S.ch < LAST ? 1 : 0) + (S.read["317"] ? 1 : 0)).forEach(l => d.push(l));
   d.push(["brk"], ["dh", Y, "EVIDENCE"]);
   if (!S.clues.length) d.push(["p", "Nothing yet. Read some pages."]);
   S.clues.slice().reverse().forEach((k, i) => d.push(["p", CLUES[k], i % 2 ? Y : W]));
@@ -1756,6 +1759,25 @@ function patrolPass(){
     `<c>Caught ${times(n)}. It goes in your file.</c>`], () => goPage("100", {roll:false}));
 }
 
+/* ---------- what you know for certain ----------
+   Six truths, sealed. Each day in the reading room breaks one. The next one is always shown with its last words blacked out. */
+const TRUTHS = [["YOUR NEIGHBOUR", "EXISTED"], ["THE AIR IS", "CLEAN"], ["THE LOST ARE", "RE-ISSUED"], ["F. LIVED IN", "YOUR FLAT"], ["VESSEN IS AN", "INVOICE"], ["YOU ARE", "F. ASTER"]];
+const HOOK = {
+  1:`He was real. So what took him? What is the Weather?`,
+  2:`If the air is clean, where do fourteen people a week go?`,
+  3:`Somebody has been writing to you for sixteen years, and signs with one letter. Who is F.?`,
+  4:`Your flat. Your street, on Wednesday. Who pays for all this? And who is that, watching you read?`,
+  5:`One sheet left. One line still sealed. It is about you.`
+};
+function truthLines(n, last){
+  return TRUTHS.map(([a, b], i) => ["p", `<b>${i + 1}</b>  ` + (i < n ? (i === n - 1 && last ? `<${last}>${a} ${b}</${last}>` : `${a} ${b}`) : i === n ? `<c>${a}</c> <x>${b}</x>` : `<x>${a} ${b}</x>`)]);
+}
+function sealCard(n, next){
+  sSolve();
+  glitch(500, () => story("NOTEBOOK", [["dh", Y, `DAY ${n} IS OVER`], ["gap"], ["p", "<c>What you know for certain:</c>"], ["gap"]].concat(truthLines(n, "g"), [["gap"],
+    ["p", n < 5 ? `<c>${NUMW[6 - n]} still sealed.</c>` : "<c>One still sealed.</c>"], ["gap"], ["p", HOOK[n], Y]]), next));
+}
+
 /* ---------- days ---------- */
 const RR = {pl:"rr", when:"READER 7"};
 const AFTER = {1:"h_shop", 2:"h_square", 3:"h_east", 4:"h_press", 5:"h_tin"};      /* where the evening starts, once the room has closed */
@@ -1773,18 +1795,18 @@ function dayPage(){
   if (S.ch === LAST) parts.push(`The lamp at the top of your screen is already lit.`);
   parts.push(["task", c0.o, "TODAY"]);
   const go0 = () => { S.event = null; save(); goPage("100", {roll:false, push:false}); };
-  story("rr", parts, S.ch === 1 ? () => story("rr", howDoc(), go0) : go0);
+  story("rr", parts, go0);      /* the rules live on page 199; each one is also told the first time it matters */
 }
 function endChapter(n){
   S.event = {name:"close", n}; save();
-  if (!SLEEVES[n]) return closing(n);
+  if (!SLEEVES[n]) return sealCard(n, () => closing(n));
   story("rr", [`You go back to the first page. It clears. But one row stays lit a moment too long.`, `Concealed text. Not the Administration's. Somebody with an EDIT key left it on the page, for whoever pressed the right button.`, `You press REVEAL.`], () => glitch(800, () => {
     const txt = SLEEVES[n].join(" "); if (!S.notes.includes(txt)) S.notes.push(txt);
     (SLEEVE_LEADS[n] || []).forEach(addLead); save(); sBell();
     const d = [["band", K, M, "CONCEALED TEXT", ""], ["p", "<c>typed with reader card</c> [mark]"], ["gap"]];
     SLEEVES[n].forEach(t => d.push(["p", t, M]));
     if (n === 1 && META.note) d.push(["gap"], ["p", "<c>A newer line underneath:</c>"], ["p", safe(META.note), Y]);
-    show(Object.assign({kind:"narr", pg:"---", label:"READER 7", doc:d, slow:true, onEnd:() => closing(n)}, RR));
+    show(Object.assign({kind:"narr", pg:"---", label:"READER 7", doc:d, slow:true, onEnd:() => sealCard(n, () => closing(n))}, RR));
   }));
 }
 function closing(n){
@@ -1871,7 +1893,10 @@ function hub(id, skip){
   if (h.pre && !skip) return story(h.from, h.pre, () => hub(id, 1));
   const list = ORDER.filter(p => S.known.includes(p)), n = heat();
   const opts = list.map(p => ({t:HNAME[p], f:() => p !== h.dest ? elsewhere(p, id) : h.day ? dayStart(h.day) : go(h.next)}));
-  story("vessen", [["raw", cityLines(list, h.from)], ["task", h.task], n ? ["p", `<c>Noted by the wardens: ${times(n)}.</c>`] : null, h.night ? ["p", "<r>After dark, wardens note wanderers.</r>"] : ["gap"]], null, opts, {compact:1, dest:list.indexOf(h.dest)});
+  const day = h.when.slice(0, 3), dl = DAYSLEFT[day], mine = S.solved.qnext;
+  if (day === "SAT" || day === "SUN") wonder("There is a red mark on the map. Every day it is nearer Lantern Row.");
+  story("vessen", [["raw", cityLines(list, h.from, day)], ["task", h.task], n ? ["p", `<c>Noted by the wardens: ${times(n)}.</c>`] : null, h.night ? ["p", "<r>After dark, wardens note wanderers.</r>"] : ["gap"]], null, opts, {compact:1, dest:list.indexOf(h.dest),
+    mid:dl === 0 ? "THEY COME TONIGHT" : mine ? `THEY COME IN ${dl} DAY${dl > 1 ? "S" : ""}` : `NEXT VISIT: ${dl} DAY${dl > 1 ? "S" : ""}`});
 }
 /* anywhere the task doesn't send you: the city is still there, and it looks like itself */
 const ELSE = {
@@ -1916,7 +1941,7 @@ STEP.house = function(){
     {t:"the Register", w:/register|ledger|book/, r:[`4-12: that's you. <b>ARRIVED Q.Y. 19, FROM SECTOR 5.</b>`, `You don't remember arriving. You have never thought about it before.`]}],
     () => { at("THU 11:00"); story("housing", [`It is all in the back pages, F. wrote.`,
       `Every set in Vessen shows Calmfax: this week's pages, and nothing older. But the readers in the Civic Reading Room hold all of it. Every Bulletin since Year 0. Every newspaper from before. Any resident may use them. Nobody does.`,
-      `It is closed on Thursdays. It opens at nine tomorrow. You will be there at nine.`], () => go("dr0")); }, {ask:"Ask about"});
+      `It is closed on Thursdays. It opens at nine tomorrow. You will be there at nine.`, `That evening there is no bread on your mat. There has been bread on your mat every Thursday for three years.`], () => go("dr0")); }, {ask:"Ask about"});
 };
 STEP.shop = function(){
   at("FRI 18:20");
@@ -1935,7 +1960,7 @@ STEP.shop = function(){
 };
 STEP.home1 = function(){
   at("FRI 21:00");
-  const after = first => () => story("home", first.concat([`Before bed you open the bread bin. Last week's heel of rye is still in there, wrapped the way Ivo always wrapped it, in old newspaper gone brown.`, `A headline runs across the fold: <b>...LDER WORKS: INSPECTOR'S REP...</b>`, `You write <b>Kalder</b> in your notebook.`]), () => { addLead("kalder"); go("dr1"); });
+  const after = first => () => story("home", first.concat([`Before bed you open the bread bin. Last week's heel of rye is still in there, wrapped the way Ivo always wrapped it, in old newspaper gone brown.`, `A headline runs across the fold: <b>...LDER WORKS: INSPECTOR'S REP...</b>`, `You write <b>Kalder</b> in your notebook.`, `When you put the light out, there is a grey van at the far end of Lantern Row. It wasn't there this morning.`]), () => { addLead("kalder"); go("dr1"); });
   story("home", [pic("home"), `Home. Your flat shares a wall with 4-13. You put your hand flat against it. It's cold. Colder than the outside walls.`], null, [
     {t:"Knock twice on the wall.", f:() => { wonder("Something knocked back from an empty flat."); after([`Nothing. You count to thirty.`, `Then, from the other side of a wall with nobody behind it: two knocks back.`])(); }},
     {t:"Put your ear to the wall.", f:() => { wonder("A set is playing in a flat with nobody in it."); after([`A set is on in there, very faint. A voice reading the forecast. The same sentence, over and over: front lingering, tape windows.`])(); }}]);
@@ -1961,8 +1986,8 @@ STEP.night2 = function(){
   at("SAT 23:30", 1);
   const fin = () => { addLead("sector 5"); if (!S.known.includes("east")) S.known.push("east"); go("dr2"); };
   const out = first => () => story("row", [pic("row"), first, `You breathe in. Nothing happens. You stand there breathing for a long time.`, `A grey van stops outside block 3. Two wardens help someone out: a woman in a grey blanket, walking like someone who has just been woken. One of them carries a cardboard box for her. On the side of the van: <b>SECTOR 5</b>.`], null, [
-    {t:"Watch from the dark until it has gone.", f:() => story("row", [`They take her up the stairs of block 3, to the flat with the fresh tape on its window. The van leaves without lights, towards the east.`, `In the morning the Bulletin will welcome a new arrival.`], fin)},
-    {t:"Follow the van to the end of the street.", risk:1, f:() => { flag("van"); story("row", [`The east gate, shut all day, stands open for it. Nobody is on it.`, `A warden's torch swings your way and stops on your face. <g>"Out late, resident."</g> The warden is humming the forecast, and goes on humming while writing down your flat number.`], fin); }}]);
+    {t:"Watch from the dark until it has gone.", f:() => story("row", [`They take her up the stairs of block 3, to the flat with the fresh tape on its window. The van leaves without lights, towards the east.`, `In the morning the Bulletin will welcome a new arrival.`, `At the door of block 3 the woman in the blanket stops, and looks straight up at your window, and lifts one hand. Then they take her in. You have never seen her before.`], fin)},
+    {t:"Follow the van to the end of the street.", risk:1, f:() => { flag("van"); story("row", [`The east gate, shut all day, stands open for it. Nobody is on it.`, `A warden's torch swings your way and stops on your face. <g>"Out late, resident."</g> The warden is humming the forecast, and goes on humming while writing down your flat number.`, `Behind you, at the door of block 3, the woman in the blanket has stopped. She is looking at you, and lifting one hand, as if she knew you. You have never seen her before.`], fin); }}]);
   story("home", [pic("home"), `Nobody in Vessen goes out after dark. The Bulletin says the Weather is worst at night.`, `The Air Office said the air was normal. Twenty years ago. And every forecast since has been a recording.`], null, [
     {t:"Peel the tape off the window and open it.", f:out(`Cold air comes in. Rain, and somewhere, faintly, bread. Below you the street is empty.`)},
     {t:"Put your coat on and go down to the street.", f:out(`You open the street door. You are outside, at night, in the Weather.`)}]);
@@ -2007,7 +2032,7 @@ STEP.press = function(){
 STEP.flat = function(){
   at("TUE 01:10", 1);
   const note = "Sheet 9 is unlisted. Its number is the day the Courier died.";
-  story("home", [pic("home"), `In the mirror by the door: a scar through your left eyebrow. A thin white line. You have always had it.`,
+  story("home", [pic("home"), `A grey van is parked outside block 4, engine off. You go up the stairs without looking at it.`, `In the mirror by the door: a scar through your left eyebrow. A thin white line. You have always had it.`,
     `<c>RESIDENT CARD. ${safe(S.name).toUpperCase()}. FLAT 4-12. ARRIVED Q.Y. 19, FROM SECTOR 5. MARKS: SCAR, LEFT BROW (CHILDHOOD FALL).</c>`,
     `You try to remember your childhood. You remember the word childhood.`, wonder("I can't remember being a child. I remember the word.") || null],
     () => look("home", "The number is under the kitchen table. Search your own flat.", [`You have lived here for three years. You have never searched it. A wardrobe. A kitchen table. And the wall you share with 4-13, where you could knock.`], [
@@ -2052,7 +2077,7 @@ STEP.wedmorn = function(){
     `<g>"Vacant since Year 3, resident,"</g> the warden says, without turning round. <g>"You'll be remembering incorrectly."</g>`,
     `No siren this time. They don't need a siren for one. They only needed to hear his old name through a thin wall, in your voice.`] : [
     `There is a loaf on your mat, wrapped in newspaper, still warm.`, `Through the wall, Tomas Rell is whistling something. He stops in the middle, as if he had caught himself.`],
-    [`It is Wednesday. Tonight at 23:10 the siren goes on Lantern Row. You know whose flat it is for.`]), () => go("h_d6"));
+    [`It is Wednesday. Tonight at 23:10 the siren goes on Lantern Row. You know whose flat it is for.`, `The grey van is at your street door now. Nobody is in it. Nobody needs to be in it until tonight.`]), () => go("h_d6"));
 };
 
 EV.warn1 = function(){
@@ -2075,7 +2100,8 @@ EV.request = function(){
     show(Object.assign({kind:"narr", pg:"---", label:"READER 7", slow:true, doc:[["gap"], ["center", G, "CARD ACCEPTED", 1], ["gap"], ["p", `<c>NAME</c>  ${safe(S.name).toUpperCase()}`], ["p", "<c>FLAT</c>  4-12 LANTERN ROW"], ["p", "<c>MARK</c>  [mark]"], ["gap"],
       ["p", "The attendant looks at the mark for a long time. Then at you. Then they lift the hinged cover on their terminal and type something you can't see."], ["gap"], ["p", "Your screen goes black."]],
       onEnd:() => glitch(1000, () => { S.read["317"] = 1; S.event = {name:"final"}; save(); sBell();
-        show(sheet9Spec(() => story("rr", [`The same mark.`, `It has been at the top of your screen all week.`, `You read the page twice. The second time your hands are shaking.`], EV.final))); })}, RR));
+        show(sheet9Spec(() => story("rr", [`The same mark.`, `It has been at the top of your screen all week.`, `You read the page twice. The second time your hands are shaking.`],
+          () => glitch(500, () => story("NOTEBOOK", [["dh", M, "THE LAST SEAL"], ["gap"]].concat(truthLines(6, "m"), [["gap"], ["p", "Nothing is sealed now. You find you would give a great deal to have one of them back."]]), EV.final))))); })}, RR));
   }}]);
 };
 EV.final = function(){
@@ -2274,7 +2300,7 @@ if (window.visualViewport) visualViewport.addEventListener("resize", resize);
 
 if (TEST) window.__g = { get S(){ return S; }, get V(){ return V; }, key:v => { submit(v); refresh(); }, text:() => { compose(); return screenText(); }, busy:() => busy, META:() => META, pick, heat, ivoGone, WH, ghost:() => ghost(), kin, hot:() => isHot(), round:() => patrolPass(), PAT,
   demo:(pl, night) => { at(night ? "SAT 23:30" : "SAT 14:00", night); story(pl, [pic(pl), ["dh", PLACE[pl].col == null ? Y : PLACE[pl].col, PLACE[pl].name], ["gap"], "A place in Vessen, as it looks on the screen. The bar above and the stripe at the left tell you where you are."], null, [{t:"One thing to do here.", f:() => 0}, {t:"Another thing to do here.", f:() => 0}], {compact:1}); },
-  demoMap:(here, night) => { at("SAT 14:00", night); story("vessen", [["raw", cityLines(ORDER, here)], ["task", "Go to the Civic Reading Room. Search the back pages for Ivo Kessel."], ["gap"]], null, ORDER.map(p => ({t:HNAME[p], f:() => 0})), {compact:1}); } };
+  demoMap:(here, night) => { at("SAT 14:00", night); story("vessen", [["raw", cityLines(ORDER, here, "SAT")], ["task", "Go to the Civic Reading Room. Search the back pages for Ivo Kessel."], ["gap"]], null, ORDER.map(p => ({t:HNAME[p], f:() => 0})), {compact:1}); } };
 titleView(); resize();
 if (!matchMedia("(pointer:coarse)").matches) kin.focus({preventScroll:true});
 </script>
