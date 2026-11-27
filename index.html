@@ -783,9 +783,9 @@ const QS = [
  {id:"qmon",ch:1,sum:"The Visit was forecast on the Monday.",a:"Monday",t:`The Visit was forecast. On which day was the forecast issued?`,ans:["monday","mon","onmonday","amonday"],
   h:[`The Weather Service prints a forecast every week. Type: <b>FORECAST</b>`,`Read page <b>522</b>. Look at the top line.`],
   react:[`Monday. Two days before the siren, somebody already knew there would be a Visit on Lantern Row.`,`You wouldn't call that weather. You'd call that a timetable.`]},
- {id:"q1",ch:1,sum:"I.K. sold bread from 4-13 in Q.Y. 19.",a:"19",t:`In which year did I.K. sell bread from the 'empty' flat 4-13?`,ans:["19","qy19","year19"],
-  h:[`People advertise in the small notices. Type: <b>BREAD</b>`,`Read page <b>359</b>. Look at its date.`],
-  react:[`Q.Y. 19. The Housing Office says flat 4-13 has been empty since Q.Y. 3. Somebody was baking bread in it sixteen years later.`,`The Register is wrong, or the Register is lying. Registers don't make mistakes.`]},
+ {id:"q1",ch:1,sum:"The Register says 4-13 was empty. In Q.Y. 19 somebody sold bread from it.",a:"400 + 359",t:`Two pages can't both be true about flat 4-13. Pin both.`,pair:[["400","112"],["359"]],ans:[],
+  h:[`One page says the flat is empty: type <b>4-13</b>. Another shows somebody living in it: type <b>BREAD</b>`,`Open page <b>400</b> and press the <b>GREEN</b> key to pin it. Then pin page <b>359</b>.`],
+  react:[`The Housing Office says flat 4-13 has been empty since Q.Y. 3. In Q.Y. 19 somebody was selling rye bread from it. "Knock twice. I.K."`,`The Register is wrong, or the Register is lying. Registers don't make mistakes.`]},
  {id:"q412",ch:1,sum:"Q.Y. 19: a 'new resident' in 4-12. Me.",a:"4-12",t:`The same small notices welcome a new resident. In which flat?`,ans:["412","flat412"],
   h:[`It is on the page with the bread notice.`,`Read page <b>359</b> to the end.`],
   react:[`4-12. That's your flat. Q.Y. 19 is the year you arrived.`,`You don't remember a welcome. You don't remember arriving.`]},
@@ -806,9 +806,9 @@ const QS = [
   h:[`Type: <b>FORECAST</b>`,`Read pages <b>507</b> and <b>518</b>. They are eleven years apart. Look at Thursday.`],
   react:[`"Seperate." The same mistake, eleven years apart.`,`Nobody writes these forecasts. They are played back.`]},
 
- {id:"q7",ch:3,sum:"Population: always 412,000.",a:"412,000",t:`What is the population of Vessen, every single year?`,ans:["412000","412thousand","412k"],
-  h:[`Type: <b>CENSUS</b>`,`Read page <b>472</b>. Then look at any other year.`],
-  react:[`412,000. Every year. Births or no births, losses or no losses.`]},
+ {id:"q7",ch:3,sum:"Population 412,000, average age 38: every year, births or not.",a:"472 + 462",t:`Two census pages, years apart, can't both be honest. Pin them.`,pair:[["453","462","472"],["453","462","472"]],ans:[],
+  h:[`Type: <b>CENSUS</b>`,`Open page <b>472</b> and press the <b>GREEN</b> key to pin it. Then pin page <b>462</b>, ten years older.`],
+  react:[`412,000, both times. Average age 38, both times.`,`Ten years without a single birth, and nobody in Vessen is a day older.`,`Nobody counts this city. Somebody copies out last year's page.`]},
  {id:"q8",ch:3,sum:"The last birth was in Q.Y. 4.",a:"4",t:`In which year was the last baby born in Vessen?`,ans:["4","four","qy4","year4"],
   h:[`Births were announced in the small notices. Type: <b>BORN</b>`,`Read page <b>354</b>. Look at its date.`],
   react:[`Q.Y. 4. Mina Hale would be eighteen now.`,`She is the youngest person in Vessen.`]},
@@ -818,9 +818,6 @@ const QS = [
  {id:"q9",ch:3,sum:"Lost each week = arrivals each week.",a:"arrivals",t:`Each week, the number lost equals the number of ___ from Sector 5.`,ans:["arrivals","arrival","welcomed","arrived","newarrivals","residents","newresidents"],
   h:[`The Bulletin prints a weekly summary. Type: <b>WEEK IN CALM</b>`,`Read page <b>296</b>.`],
   react:[`Fourteen lost, fourteen welcomed. Nine and nine. Seven hundred and thirty-one, and seven hundred and thirty-one.`]},
- {id:"qsl",ch:3,sum:"Arrivals 'rest' on the Sleep Lines.",a:"Sleep",t:`Where do arrivals rest before placement? On the ___ Lines.`,ans:["sleep","sleeplines","thesleeplines"],
-  h:[`Type: <b>SECTOR 5</b>`,`Read page <b>235</b>.`],
-  react:[`The Sleep Lines. In the old sanatorium, beside the sealed works.`,`"Most arrive remembering very little of the journey."`]},
  {id:"q10",ch:3,sum:"The lost are re-issued.",a:"re-issued",t:`What happens to the lost? They are ___.`,ans:["reissued","reissue"],
   h:[`Somebody leaked a directive. Type: <b>DIRECTIVE</b>`,`Open page <b>806</b>, then press the <b>YELLOW</b> key to show the hidden word.`],
   react:[`Re-issued. Like a ration book. Fresh name, fresh file, clean pulse.`,`Nobody is wasted.`]},
@@ -831,34 +828,28 @@ const QS = [
  {id:"q13",ch:4,sum:"A guard split Aster's left eyebrow.",a:"left eyebrow",t:`A guard gave F. a scar. Where on the face?`,ans:["eyebrow","brow","lefteyebrow","leftbrow","theeyebrow","thelefteyebrow","theleftbrow","eyebrows","onthelefteyebrow","ontheeyebrow"],
   h:[`The newspaper printed a picture of its night desk. Type: <b>NEWSROOM</b>`,`Read page <b>602</b> to the end.`],
   react:[`A split left eyebrow. "It will scar."`,`Your hand goes to your face before you can stop it.`]},
- {id:"qivo",ch:4,sum:"Ivo Kessel fed the Courier's night desk.",a:"Ivo Kessel",t:`Who 'brings the bread' in the newsroom photograph?`,ans:["ivo","kessel","ivokessel","mrkessel"],
-  h:[`Read the caption under the picture.`,`It is on page <b>602</b>.`],
-  react:[`Ivo. Twenty-four years ago he was feeding F. Aster's night shift.`,`Last Tuesday he was feeding you.`]},
  {id:"q12",ch:4,sum:"Aster was taken from flat 4-12.",a:"4-12",t:`Which flat was F. taken from in Q.Y. 11?`,ans:["412","flat412"],
   h:[`The Bulletin reported the night the agitator was taken. Type: <b>AGITATOR</b>`,`Open page <b>261</b>, then press the <b>YELLOW</b> key.`],
   react:[`4-12.`,`You write it down. Then you look at it for a long time.`,`<b>4-12 is your flat.</b>`]},
  {id:"q18",ch:4,sum:"4-12: someone lost again in Q.Y. 18.",a:"18",t:`Someone was lost from flat 4-12 a second time. In Q.Y. ___.`,ans:["18","qy18","year18"],
   h:[`Search for the flat. Type: <b>4-12</b>`,`Open page <b>278</b> and press the <b>YELLOW</b> key.`],
   react:[`Q.Y. 18. "After repeated visits to the Civic Reading Room."`,`Lost in Q.Y. 11. Lost again in Q.Y. 18. And in Q.Y. 19 a new resident arrived in 4-12. You.`]},
- {id:"qrr",ch:4,sum:"The Reading Room opened in Q.Y. 12.",a:"12",t:`The Reading Room opened in Q.Y. ___, a year after F. was taken.`,ans:["12","qy12","year12"],
-  h:[`Type: <b>READING ROOM</b>`,`Read page <b>265</b>.`],
-  react:[`Q.Y. 12. "Proposed after the business with the agitator."`,`Residents who take an interest in history will be noted. You look up. The attendant is looking at you.`]},
+ {id:"qtwice",ch:4,sum:"The same welcome to 4-12 was printed in Q.Y. 11 and again in Q.Y. 19.",a:"351 + 359",t:`The same welcome to 4-12 was printed twice. Pin both.`,pair:[["351"],["359"]],ans:[],
+  h:[`It was in the small notices. Type: <b>4-12</b>`,`Pin page <b>351</b> (Q.Y. 11), then page <b>359</b> (Q.Y. 19).`],
+  react:[`Word for word. "Welcome. The walls are thin. Be kind to them. A neighbour."`,`Q.Y. 11: the week after F. Aster was taken. Q.Y. 19: the week you arrived.`,`The same neighbour, the same flat, and a new resident. Twice.`]},
  {id:"qnext",ch:4,sum:"Wednesday's Visit: Lantern Row, again.",a:"Lantern Row",t:`Which street gets this Wednesday's Weather Visit?`,ans:["lanternrow","lantern","onlanternrow","lanternrowagain"],
   h:[`A new forecast is issued every Monday. Today is Monday. Type: <b>FORECAST</b>`,`Read page <b>523</b>. Look at Wednesday.`],
   react:[`Lantern Row. Again.`,`One resident will be lost to the weather at 23:10 on Wednesday night. It has already been typed.`,`Lantern Row has been unlucky. It is about to be unlucky in flat 4-12.`]},
 
- {id:"qnothing",ch:5,sum:`The Bulletin: "nothing" beyond Morrow Flats.`,a:"nothing",t:`The Bulletin says there is ___ beyond Morrow Flats.`,ans:["nothing","nothingatpresent"],
-  h:[`Somebody closed the roads out of Vessen. Type: <b>OUTSIDE</b>`,`Read page <b>204</b>.`],
-  react:[`Nothing. No railway, no river road, no outlying districts.`,`"Do not go and look." You have noticed that the Bulletin only says that about things that are there.`]},
+ {id:"qout",ch:5,sum:"The Bulletin says nothing lies beyond Morrow Flats. Something does.",a:"204 + 804",t:`One page says nothing is outside Vessen. Pin it, and its proof.`,pair:[["204"],["356","804","480","805"]],ans:[],
+  h:[`Type: <b>OUTSIDE</b>. One page closes every road. Others show that something still comes in.`,`Pin page <b>204</b>. Then pin page <b>804</b>, sheet 4 of the Low Tide.`],
+  react:[`"There is nothing beyond Morrow Flats at present."`,`And yet every relief tin is stamped K.R.T. Nobody in Vessen makes tins. Somebody outside is alive, and packing, and being paid.`,`"Do not go and look." You have noticed that the Bulletin only says that about things that are there.`]},
  {id:"qtrust",ch:5,sum:"Kalder founded a Remediation Trust before the leak.",a:"Remediation",t:`Weeks before the leak, Kalder founded the Kalder ___ Trust.`,ans:["remediation","remediationtrust","kalderremediationtrust"],
   h:[`F. Aster wrote the story. Type: <b>TRUST</b>`,`Read page <b>606</b>.`],
   react:[`The Kalder Remediation Trust. Founded "in the unlikely event of an incident".`,`Seven weeks later there was an incident.`]},
  {id:"qhead",ch:5,sum:"The Trust is paid for every resident, while the incident lasts.",a:"resident",t:`The Trust is paid a daily sum for every ___ in its care.`,ans:["resident","residents","head","person","everyresident","perresident","perhead"],
   h:[`It is in the same story.`,`Read page <b>606</b>, the second paragraph.`],
   react:[`For every resident, for as long as the incident lasts. And the Trust's own readers decide when it is over.`,`412,000. Steady, as every year. It was never a census. It is an invoice.`,`Lose a resident and the money drops. So nobody is ever lost. They are washed, and counted again.`]},
- {id:"qkrt",ch:5,sum:"Relief tins are stamped K.R.T.",a:"K.R.T.",t:`Which three letters are stamped under every relief tin?`,ans:["krt"],
-  h:[`Somebody asked in the small notices. Type: <b>TINS</b>`,`Read page <b>356</b>, or sheet 4 on page <b>804</b>.`],
-  react:[`K.R.T. Kalder Remediation Trust.`,`Nobody in Vessen makes tins. Somebody outside is alive, and packing, and being paid.`]},
  {id:"qfence",ch:5,sum:"There is a fence in the east. Its signs face outward.",a:"outward",t:`F. found a fence in the east. Which way do its signs face?`,ans:["outward","outwards","out","away","facingout","facingoutward","theyfaceoutward"],
   h:[`F. walked east and wrote it down. Type: <b>FENCE</b>`,`Read sheet 5, on page <b>805</b>.`],
   react:[`Outward. The fence isn't there to keep the Weather in.`,`It is there so that nobody outside looks too closely at 412,000 people who are perfectly well.`]},
@@ -947,7 +938,7 @@ const FLATS = {
 
 
 /* ================= GAME ================= */
-const LS = "backissues.save.v6", LM = "backissues.meta.v2";
+const LS = "backissues.save.v7", LM = "backissues.meta.v2";
 const norm = s => String(s).toLowerCase().replace(/[^a-z0-9]/g, "");
 const strip = s => String(s).replace(/<x>.*?<\/x>/g, "").replace(/<[^>]+>/g, "").replace(/\[mark\]/g, "");
 const safe = s => String(s).replace(/[<>\[\]]/g, "");
@@ -1149,7 +1140,7 @@ function cityLines(list, here){
 
 /* ---------- state ---------- */
 function freshState(name){
-  return {v:2, name, ch:1, day:1, min:540, solved:{}, clues:[], leads:["kessel", "4-13", "lantern row"], notes:[], read:{}, con:{}, yh:{}, sus:0, seen:{}, fl:{}, known:["home", "row", "square", "housing", "rr", "harbour"],
+  return {v:2, name, ch:1, day:1, min:540, solved:{}, clues:[], leads:["kessel", "4-13", "lantern row"], notes:[], read:{}, con:{}, yh:{}, sus:0, seen:{}, fl:{}, pins:[], known:["home", "row", "square", "housing", "rr", "harbour"],
     res:[], resQ:"", resN:0, resHeld:0, resAmb:"", hints:{}, hintsUsed:0, warned:0, cmds:0, event:null, snap:null, closed:false, wrong:0, page:"100", hist:[]};
 }
 const avail = c => QS.filter(x => x.ch === c);
@@ -1174,6 +1165,8 @@ function coach(){
   if (hasY(V) && !V.rev) return ["Hidden text here: press YELLOW key.", Y];
   if (V.pg === "190") return S.res.length ? ["Click a page, or type its number.", C] : ["Type another word and press Enter.", C];
   if (S.cmds === 0 && S.ch === 1) return [COARSE ? "Start: tap the word KESSEL above." : "Start here: type KESSEL, press Enter.", G];
+  const q = curQ();
+  if (q && q.pair) return [`Pinned: ${S.pins[0] || "---"} + ${S.pins[1] || "---"}. GREEN key pins.`, C];
   return ["Type a word to search, or the answer.", C];
 }
 let STAT = {msg:"", fg:C, t0:0, until:0}, statQ = [], BOX = null, busy = false, painting = false, altPhase = 0;
@@ -1193,7 +1186,8 @@ function fastKeys(){
   if (V.prompt) return [];
   if (V.opts && V.sub === V.pages.length - 1) return V.opts.length === 1 ? [{l:"Go on", f:() => pick(0)}] : V.opts.slice(0, 4).map((o, i) => ({l:"Choice " + (i + 1), f:() => pick(i)}));
   if (V.kind !== "page" || V.alt) return [{l:"Go on", f:() => submit("")}];
-  return [{l:"Home", f:() => runCmd("home")}, {l:"Notes", f:() => runCmd("notes")}, {l:"Reveal", f:() => runCmd("reveal")}, {l:"Hint", f:() => runCmd("hint")}];
+  const q = curQ(), pin = q && q.pair ? {l:S.pins.includes(V.pg) ? "Unpin" : "Pin", f:() => runCmd("pin")} : {l:"Notes", f:() => runCmd("notes")};
+  return [{l:"Home", f:() => runCmd("home")}, pin, {l:"Reveal", f:() => runCmd("reveal")}, {l:"Hint", f:() => runCmd("hint")}];
 }
 function putRow(r, l, dh){ const row = SCR[r]; for (let c = 0; c < COLS; c++) row[c] = dh ? Object.assign({}, l[c], {dh}) : l[c]; }
 function compose(){
@@ -1201,7 +1195,7 @@ function compose(){
   SCR = []; for (let r = 0; r < ROWS; r++) SCR.push(line(r >= 1 && r <= PH + 1 ? bgc : K));
   /* row 0: the header every teletext page has */
   const h = SCR[0], pg = V ? (V.alt ? V.altPg[altPhase] : V.pg) : "100";
-  wr(h, 0, "P" + pg, W); wr(h, 5, (V && V.label) || "CALMFAX", Y);
+  wr(h, 0, "P" + pg, S && isHot() ? R : W); wr(h, 5, (V && V.label) || "CALMFAX", Y);      /* a red page number: not a calm page */
   if (HDR.roll) wr(h, 15, HDR.roll, G); else if (/^\d+$/.test(pg)) wr(h, 15, pg, W);
   const mn = S ? S.min : 540;
   if (!V || V.kind !== "narr"){ wr(h, 19, S ? CH[S.ch].dn.slice(0, 3) : "Fri", W); wr(h, 23, `${pad(mn / 60 | 0)}:${pad(mn % 60)}/${pad(new Date().getSeconds())}`, W); }   /* story scenes carry their own day and time */
@@ -1236,8 +1230,10 @@ function compose(){
       }
     }
   }
-  const st = STAT.msg ? [STAT.msg, STAT.fg] : coach();
-  if (st) wr(SCR[22], 1, T(st[0]).slice(0, 38), st[1]);
+  const st = PAT.warn > 0 && V && V.kind === "page" ? [`FOOTSTEPS! RED key: safe page.  ${Math.ceil(PAT.warn)}`, R, 1] : STAT.msg ? [STAT.msg, STAT.fg] : coach();
+  if (st) wr(SCR[22], 1, T(st[0]).slice(0, 38), st[1], st[2] ? {fl:1} : null);
+  /* the last minute: a bar that runs out */
+  if (V && V.timer){ const left = Math.max(0, V.timer.end - Date.now()) / V.timer.ms, n = TIMED ? Math.ceil(38 * left) : 38; for (let c = 1; c <= 38; c++){ const q = SCR[PH + 1][c]; q.mo = 63; q.fg = c <= n ? (left < .2 ? R : M) : B; if (c > n) q.sep = 1; } }
   /* row 23: what you are typing */
   const il = SCR[23]; let x = 1;
   const lab = V && V.prompt ? V.prompt.label : (V && V.opts && V.opts.length > 1 && V.sub === V.pages.length - 1 ? `Type 1-${V.opts.length}` : "");
@@ -1336,6 +1332,7 @@ function tailDoc(a){
   if (a.days) return [];
   const d = [["gap"]], see = (SEE[a.pg] || []).filter(n => BYPG[n] && BYPG[n].ch <= S.ch && !BYPG[n].wd);
   if (see.length) d.push(["p", "<c>See also:</c> " + see.map(n => `<a c="${n}">page ${n}</a>`).join("  ")]);
+  const q = curQ(); if (q && q.pair) d.push(["p", S.pins.includes(a.pg) ? `<g>PINNED.</g> <a c="pin">Unpin this page</a>` : `<a c="pin">PIN THIS PAGE</a> <c>as proof</c>`]);
   d.push(["p", `<a c="older">< older</a>  <c>${SRC[a.p]}</c>  <a c="newer">newer ></a>`]);
   return d;
 }
@@ -1351,7 +1348,11 @@ function howDoc(){
     ["p", "<b>2</b> In the Reading Room, type a word to search the old pages. Click a result to read it."], ["gap"],
     ["p", "<b>3</b> A question sits at the bottom of the screen. Found the answer? Type it."], ["gap"],
     ["p", "<b>4</b> Anywhere else, pick what to look at. Some choices can't be taken back, and they are remembered."], ["gap"],
-    ["p", "<g>Stuck? The BLUE key gives a hint.</g>"]];
+    ["p", "<g>Stuck? The BLUE key gives a hint.</g>"], ["brk"],
+    ["dh", R, "AND YOU ARE WATCHED"], ["gap"],
+    ["p", "<b>5</b> Some questions want proof, not a word. Open the page that proves it and press the GREEN key to pin it."], ["gap"],
+    ["p", "<b>6</b> Not every page is a calm page. When the attendant walks the room, have a calm one on your screen: the RED key."], ["gap"],
+    ["p", "<b>7</b> Out in the city, some places give you time for only a few things. Choose what you look at."]];
 }
 function indexDoc(){
   const d = [["raw", logoLines()], ["gap"], ["p", "Type a word and press Enter to search 22 years of old pages."], ["gap"],
@@ -1418,7 +1419,7 @@ function pageSpec(n){
       ["p", "Calm Index for the Lantern District this morning: <b>0.71</b>. Well done."], ["gap"], ["p", "<g>STAY IN. STAY CALM.</g>"]]};
     case "199": return {pg:n, doc:howDoc().concat([["brk"], ["dh", Y, "EXTRA KEYS"], ["gap"]],
       [["BACK", "the page you were on before"], ["601", "jump straight to a page"], ["NOTES", "questions and evidence"], ["COMPARE", "507 518: flick between two"], ["ASK", "and a word: ask at the desk"], ["LOOK", "look around the room"], ["SOUND", "sound on or off"], ["RESTART", "give up this visit"]].map(r => ["kv", r[0], r[1], null, 10]),
-      [["gap"], ["p", "<c>The lamp at the top of your screen is the attendant watching. It can't hurt you.</c>"]])};
+      [["gap"], ["p", "<c>The lamp at the top of your screen is the attendant's interest in you. Keep it low.</c>"]])};
     case "200": return {pg:n, doc:[["band", K, Y, "CALM BULLETIN", "BACK PAGES"], ["dh", W, "Q.Y. 0 to Q.Y. 21"], ["p", "4,812 pages are held. They are not listed."], ["gap"], ["p", "Type a word to search them."], ["gap"], ["p", "<c>Some pages are held at the desk until a reader has a reason to see them. The attendant decides what is a reason.</c>"]]};
     case "500": return {pg:n, doc:[["band", K, C, "WEATHER SERVICE", ""], ["raw", mapLines(S.ch >= 4 ? 48 : 47)], ["gap"], ["idx", "This Week's Forecast", S.ch >= 4 ? 523 : 522], ["idx", "About Our Forecasts", 503], ["gap"], ["p", "Old forecasts are not kept. They are of no use to you."]]};
     case "600": return {pg:n, doc:[["band", W, B, "PRE-QUIET MATERIAL", ""], ["dh", W, "The Vessen Courier"], ["p", "Pages from before the Quiet are retained for completeness."], ["gap"], ["p", "<r>They are not accurate.</r> They are not listed."], ["gap"], ["p", "Type a word to search them."]]};
@@ -1499,7 +1500,7 @@ function doSearch(raw){
   });
   let list = hits; if (list.length > 14) list = list.sort((x, y) => y[1] - x[1]).slice(0, 14);
   list = list.map(x => x[0]).sort((x, y) => x.y - y.y);
-  S.res = list.map(a => a.pg); S.resQ = qs.slice(0, 22).toUpperCase(); S.resN = hits.length; S.resHeld = held;
+  S.res = list.map(a => a.pg); S.resQ = qs.slice(0, 22).toUpperCase(); S.resN = hits.length; S.resHeld = held; S.resFlag = flag ? 1 : 0;
   S.resAmb = S.cmds % 4 === 0 ? (S.sus > 45 && Math.random() < .5 ? "The lamp at the top of your screen is brighter than it was this morning." : ambient()) : "";
   roll(420, () => { sPage(); openPage(resultsSpec()); if (flag >= 8) setStatus("The attendant looks up at that.", G, 3000); });
 }
@@ -1528,15 +1529,32 @@ function doCompare(arg){
   else setStatus(diff < 12 ? `Only ${diff} characters differ.` : "Almost everything differs.", Y, 6000);
   save();
 }
+function solved(x){
+  S.solved[x.id] = x.a; S.pins = []; sSolve(); save();
+  const next = curQ(), parts = [["dh", G, x.pair ? "PROVED" : "CORRECT"], ["gap"], ["p", x.t, C], ["p", `<g>${x.pair ? "Pages " + x.a.replace("+", "and") : x.a}</g>`], ["gap"]].concat(typeof x.react === "function" ? x.react() : x.react);
+  if (next) parts.push(["gap"], ["p", `<b>Next:</b> ${next.t}`]);
+  story("NOTEBOOK", parts, () => afterSolve(x));
+}
 function tryAnswer(val){
   const x = curQ();
-  if (!x || !x.ans.includes(norm(val))) return false;
-  S.solved[x.id] = x.a; sSolve(); save();
-  const next = curQ(), parts = [["dh", G, "CORRECT"], ["gap"], ["p", x.t, C], ["p", `<g>${x.a}</g>`], ["gap"]].concat(typeof x.react === "function" ? x.react() : x.react);
-  if (next) parts.push(["gap"], ["p", `<b>Next question:</b> ${next.t}`]);
-  story("NOTEBOOK", parts, () => afterSolve(x));
-  return true;
+  if (!x || x.pair || !x.ans.includes(norm(val))) return false;
+  solved(x); return true;
 }
+/* some questions are answered with evidence: pin the two pages that prove it */
+function doPin(){
+  const x = curQ(), pg = V.pg;
+  if (!x || !x.pair) return setStatus("Nothing to prove just now.", C);
+  if (!/^\d{3}$/.test(pg) || ["100", "101", "190", "000", "199"].includes(pg) || V.alt) return setStatus("Open an archive page, then pin it.", C);
+  if (S.pins.includes(pg)){ S.pins = S.pins.filter(n => n !== pg); save(); refreshPage(); return setStatus(`Page ${pg} unpinned.`, C); }
+  S.pins.push(pg); if (S.pins.length > 2) S.pins.shift(); sKey(); save();
+  if (S.pins.length === 2){
+    const [a, b] = S.pins, [A0, B0] = x.pair;
+    if ((A0.includes(a) && B0.includes(b)) || (A0.includes(b) && B0.includes(a))) return solved(x);
+    sBuzz(); refreshPage(); return setStatus(`${a}+${b}: no proof. Pin another page.`, R, 7000);
+  }
+  refreshPage(); setStatus(`Page ${pg} pinned. Now pin the other one.`, G, 7000);
+}
+function refreshPage(){ const sub = V.sub, sp = pageSpec(V.pg); if (sp && !sp.held){ show(Object.assign({kind:"page", label:"CALMFAX", keepStat:true, sub}, sp)); finishPaint(); refresh(); } }
 function afterSolve(x){
   if (S.ch < LAST && avail(S.ch).every(q => S.solved[q.id])) return endChapter(S.ch);
   if (x && x.id === "q14" && !S.read["317"]) return EV.request();
@@ -1546,7 +1564,7 @@ function doHint(){
   const x = curQ();
   if (!x) return setStatus(S.ch === LAST ? "Type 317 to open the page." : "Nothing left to do today.", C);
   const n = Math.min(S.hints[x.id] || 0, 2); S.hints[x.id] = n + 1; S.hintsUsed++;
-  story("NOTEBOOK", [["dh", Y, `HINT ${n + 1} OF 3`], ["gap"], ["p", x.t, C], ["gap"], n < 2 ? x.h[n] : `The answer is: <g>${x.a}</g>. Type it.`, n < 2 ? "<c>Still stuck? Press the BLUE key again.</c>" : null], resume);
+  story("NOTEBOOK", [["dh", Y, `HINT ${n + 1} OF 3`], ["gap"], ["p", x.t, C], ["gap"], n < 2 ? x.h[n] : x.pair ? `Open page <g>${x.a.split(" + ")[0]}</g> and press the GREEN key. Then open page <g>${x.a.split(" + ")[1]}</g> and press it again.` : `The answer is: <g>${x.a}</g>. Type it.`, n < 2 ? "<c>Still stuck? Press the BLUE key again.</c>" : null], resume);
 }
 function doAsk(arg){
   const t = arg.toLowerCase().replace(/^(about|for|the attendant about)\s+/, "").trim();
@@ -1583,6 +1601,7 @@ function runCmd(raw){
     case "read": case "open": case "page": case "go": { const m = a.match(/\d{3}/); return m ? goPage(m[0]) : setStatus("Type the page number.", C); }
     case "reveal": case "show": return doReveal();
     case "compare": case "flick": return doCompare(a);
+    case "pin": case "unpin": return doPin();
     case "notes": case "notebook": return goPage("000", {roll:false});
     case "hint": return doHint();
     case "ask": case "talk": return doAsk(a);
@@ -1636,12 +1655,50 @@ function act(ln){
   if (ln.t === "p") goPage(ln.n); else if (ln.t === "s") doSearch(ln.q);
 }
 
+/* ---------- the attendant's round ----------
+   Old newspapers, sedition, the dissolved Air Office, concealed text and your own notebook are not calm pages.
+   The longer one of them is on your screen, the sooner the attendant gets up. Footsteps give you a few seconds to put a calm page up. */
+const PAT = {t:0, warn:0}, HOTSRC = {VC:1, LT:1, AO:1};
+const TIMED = !TEST || /[?&]live/.test(location.search);      /* the automated playthrough runs without clocks; ?test&live puts them back */
+function isHot(v){
+  v = v || V; if (!S || !v || v.kind !== "page" || v.alt) return false;
+  const a = v.art || BYPG[v.pg];
+  return !!((a && HOTSRC[a.p]) || v.rev || ["000", "211", "600", "700", "800"].includes(v.pg) || (v.pg === "190" && S.resFlag));
+}
+const nextRound = () => (S.ch === 1 ? 38 : 26) + Math.random() * 20;
+const sStep = () => { tone(72, .09, .07, "sine"); tone(64, .09, .05, "sine", .16); };
+function patrolTick(){
+  if (!S || !V || V.kind !== "page" || S.event || (S.ch >= LAST && S.read["317"])){ PAT.warn = 0; return; }
+  if (!TIMED || busy || BOX) return;
+  if (PAT.warn > 0){ const b = Math.ceil(PAT.warn); PAT.warn -= .25; if (Math.ceil(PAT.warn) < b) sStep(); if (PAT.warn <= 0) patrolPass(); return; }
+  if (!isHot()) return;
+  if (PAT.t <= 0) PAT.t = S.seen.pat ? nextRound() : 7;
+  PAT.t -= .25; if (PAT.t > 0) return;
+  if (!S.seen.pat){
+    S.seen.pat = 1; PAT.t = nextRound(); save(); sStep();
+    return story("rr", [`Behind you a chair scrapes. The attendant gets up and walks slowly along the row of readers, looking at each screen in turn.`,
+      `Yours is not showing a calm page. Look at the page number at the top left: it has turned <r>red</r>. Old newspapers do that. So does sedition, and so does your own notebook.`,
+      `This once, the attendant turns back before reaching you.`,
+      ["task", "When you hear footsteps, press the RED key before they reach you. It puts page 100 on your screen.", "RULE"]], resume);
+  }
+  PAT.warn = [0, 9, 8, 7, 7, 6, 6][S.ch] || 6; sStep();
+}
+function patrolPass(){
+  PAT.warn = 0; PAT.t = nextRound();
+  if (!isHot()){ addSus(-12); sKey(); return setStatus(COARSE ? "They walk past. Tap BACK to return." : "They walk past. Type BACK to return.", G, 7000); }
+  S.fl.caught = (S.fl.caught | 0) + 1; addSus(30); save(); sBuzz();
+  const n = S.fl.caught;
+  story("rr", [`The footsteps stop behind your chair.`, `<g>"That isn't a calm page, resident."</g> The attendant reads your screen over your shoulder. All of it, slowly.`,
+    n === 1 ? `Then they go back to the desk, and write for some time.` : `Then they go back to the desk. They don't need to look up your card number any more.`,
+    `<c>Caught ${times(n)}. It goes in your file.</c>`], () => goPage("100", {roll:false}));
+}
+
 /* ---------- days ---------- */
 const RR = {pl:"rr", when:"READER 7"};
 const AFTER = {1:"h_shop", 2:"h_square", 3:"h_east", 4:"h_press", 5:"h_tin"};      /* where the evening starts, once the room has closed */
 function dayStart(n){
   ({2:["forecast", "air office", "quiet"], 3:["born", "sector 5"], 4:["reading room", "4-12", "forecast"], 5:["outside"], 6:["reader card"]}[n] || []).forEach(addLead);
-  S.ch = n; S.day = n; S.min = 540; S.sus = n === LAST ? 30 : 0; S.warned = 0; S.closed = false; S.res = []; S.resQ = ""; S.hist = []; S.page = "100";
+  S.ch = n; S.day = n; S.min = 540; S.sus = n === LAST ? 30 : 0; S.warned = 0; S.closed = false; S.res = []; S.resQ = ""; S.resFlag = 0; S.pins = []; S.hist = []; S.page = "100"; PAT.warn = 0; PAT.t = 0;
   S.event = {name:"day"}; S.snap = null; save();
   dayPage();
 }
@@ -1675,22 +1732,35 @@ function closing(n){
 const EV = {}, STEP = {};
 function go(id){ S.event = {name:"step", id}; save(); STEP[id](); }
 /* what you did outside the reading room. Each of these can only count once, so a scene can be replayed from a save. */
-const LOUD = 4;                                                              /* this loud, and they take the EDIT key out of reader 7 */
-const HEAT = {name:1, sign:1, van:1, early:2, clerk:1, call:2, red:1};      /* how loud you have been */
+const LOUD = 5;                                                              /* this loud, and they take the EDIT key out of reader 7 */
+const HEAT = {name:1, sign:1, van:1, clerk:1, call:2, red:1, lshop:1, lsquare:1, lward:2, lpress:1, lharb:1};      /* how loud you have been */
 const IVO = {said:1, knock:1, told:2};                                       /* how often his old name went through a thin wall */
 const tally = T0 => Object.keys(T0).reduce((n, k) => n + (S.fl[k] ? T0[k] : 0), 0);
-const heat = () => tally(HEAT), ivoGone = () => tally(IVO) >= 2, keyDead = () => heat() >= LOUD && !S.fl.named;
+const heat = () => tally(HEAT) + Math.min(2, S.fl.caught | 0), ivoGone = () => tally(IVO) >= 2, keyDead = () => heat() >= LOUD && !S.fl.named;
 const flag = k => { S.fl[k] = 1; save(); };
 const TIMES = ["", "once", "twice", "three times", "four times", "five times"];
 const times = n => TIMES[n] || "too many times to count";
 
-/* a place you search yourself: pick what to look at. The story moves on once you have found what matters. */
-function look(pl, task, intro, spots, done, seen){
-  seen = seen || {};
-  const found = spots.some((s, i) => s.key && seen[i]), back = () => look(pl, task, intro, spots, done, seen);
-  const opts = spots.map((s, i) => ({t:seen[i] ? `<c>${s.t} ✓</c>` : s.t, risk:s.risk, f:() => { seen[i] = 1; if (s.f) s.f(); if (s.go) s.go(back); else story(pl, s.r, back); }}));
+/* a place you search yourself: pick what to look at. The story moves on once you have found what matters.
+   o.time: you only have time for that many things. Run out without the one that matters, and you are seen (o.flag), and learn it the hard way (o.late). */
+function meterLine(label, left, total){
+  const l = line(K); let x = wr(l, 1, label, Y) + 1;
+  for (let i = 0; i < total; i++){ const q = l[x + i * 2]; q.mo = 63; if (i < left) q.fg = left === 1 ? R : G; else { q.fg = B; q.sep = 1; } }
+  wr(l, x + total * 2, left === 1 ? "time for one more thing" : `time for ${NUMW[left].toLowerCase()} things`, left === 1 ? R : C);
+  l.grp = "task"; return l;
+}
+function look(pl, task, intro, spots, done, o, seen){
+  o = o || {}; seen = seen || {};
+  const got = () => spots.some((s, i) => s.key && seen[i]), left = () => o.time ? o.time - Object.keys(seen).length : 9;
+  const found = got();
+  const back = () => {
+    if (left() > 0) return look(pl, task, intro, spots, done, o, seen);
+    if (got()) return done();
+    flag(o.flag); sBuzz(); story(pl, o.late, o.lateDone || done);
+  };
+  const opts = spots.map((s, i) => ({t:seen[i] ? `<c>${s.t} ✓</c>` : s.t, risk:s.risk, key:s.key, f:() => { if (seen[i]) return story(pl, s.r || [`You have looked there.`], () => look(pl, task, intro, spots, done, o, seen)); seen[i] = 1; if (s.f) s.f(); if (s.go) s.go(back); else story(pl, s.r, back); }}));
   if (found) opts.push({t:"<b>You have what you came for. Go on.</b>", f:done});
-  story(pl, [pic(pl), ["task", found ? "Found it. Look further, or go on." : task]].concat(found ? [] : [["gap"]].concat(intro)), null, opts, {compact:1});
+  story(pl, [pic(pl), ["task", found ? "Found it. Look further, or go on." : task], o.time ? ["raw", [meterLine(o.meter, left(), o.time)]] : null].concat(found ? [] : [["gap"]].concat(intro)), null, opts, {compact:1});
 }
 
 /* the map: you always have a task, and it says where. Getting there is up to you. */
@@ -1769,13 +1839,17 @@ STEP.house = function(){
 STEP.shop = function(){
   at("FRI 18:20");
   const home = () => go("home1");
-  look("row", "Find Kessel's Bakery.", [`Your street. Three doors from your block: a shop you have walked past every day for three years. Boards over the door. A window painted white from inside. A sign over it, painted white too.`], [
+  look("row", "Find Kessel's Bakery.", [`Three doors from your block: a shop you have walked past every day for three years. A warden is walking the street, away from you. Not for long.`], [
     {t:"The boards over the door", r:[`Nailed from the outside. New nails in old wood.`]},
     {t:"The window", r:[`Whitewash on the inside of the glass. You can see your own face, and behind it nothing.`]},
-    {t:"The paint over the sign", key:1, f:() => flag("shop"), r:[`You scrape at it with your door key. The paint is thin.`, `Under it, in old gold letters: <b>KESS</b>`, `At the end of the street a warden has stopped walking.`]}],
-    () => story("row", [`Four gold letters, and a warden watching you from the corner.`], null, [
+    {t:"The letterbox", r:[`Rusted shut. Somebody has pushed a ration leaflet halfway in, years ago, and the rain has made paste of it.`]},
+    {t:"The paint over the sign", key:1, r:[`You scrape at it with your door key. The paint is thin.`, `Under it, in old gold letters: <b>KESS</b>`, `At the end of the street a warden has stopped walking.`]}],
+    () => { flag("shop"); story("row", [`Four gold letters, and a warden watching you from the corner.`], null, [
       {t:"Put the key in your pocket. Walk home slowly.", f:() => story("row", [`You walk. The warden watches you all the way to your door, and then goes on with the round.`, `KESS. It's enough. You know the rest of the word.`], home)},
-      {t:"Scrape the whole sign clean, where the street can read it.", risk:1, f:() => { flag("sign"); story("row", [`<b>KESSEL'S BAKERY</b>. Gold letters, as bright as the day they were painted. Two residents in the bread queue read them, and then look hard at the ground.`, `The warden doesn't come over. The warden takes out a notebook and looks up at the windows of block 4, counting along to yours.`], home); }}]));
+      {t:"Scrape the whole sign clean, where the street can read it.", risk:1, f:() => { flag("sign"); story("row", [`<b>KESSEL'S BAKERY</b>. Gold letters, as bright as the day they were painted. Two residents in the bread queue read them, and then look hard at the ground.`, `The warden doesn't come over. The warden takes out a notebook and looks up at the windows of block 4, counting along to yours.`], home); }}]); },
+    {time:2, meter:"WARDEN", flag:"lshop", late:[`Boots. The warden's round has come back down the street, and you are standing in front of a shop that isn't there.`,
+      `You turn to go. The door key in your hand drags across the sign as you turn, and takes a strip of white with it. Old gold letters: <b>KESS</b>`,
+      `<g>"Lost something, resident?"</g> The warden writes down the number of your block.`]});
 };
 STEP.home1 = function(){
   at("FRI 21:00");
@@ -1791,12 +1865,15 @@ STEP.square = function(){
     `<g>"I only ever read one page. I'm on it. It's the only page I'm on."</g> She looks at you properly. <g>"What are you finding?"</g>`], null, [
     {t:"Tell her. The Air Office, the forecasts, all of it.", risk:1, f:() => { flag("mina"); story("square", [`You tell her. She listens the way nobody in Vessen listens: all the way to the end.`, `<g>"Then my mother didn't forget me in the Weather,"</g> she says slowly. <g>"Somebody made her."</g>`, `She stands up. <g>"I'm going to look that up."</g>`], back); }},
     {t:`Say: "Nothing. Family history."`, f:() => story("square", [`<g>"Me too,"</g> she says. <g>"Mine's very short."</g>`, `She goes back to her bread. You have the feeling you have just failed something, and that she is used to it.`], back)}]);
-  look("square", "Look at the siren. Find out what makes it sound.", [`A notice board. A stone with numbers on it. A bench. The siren on its post, with a grey box bolted underneath. Nobody is looking at you. You think.`], [
+  look("square", "Look at the siren. Find out what makes it sound.", [`A notice board, a stone, a bench, and the siren on its post with a grey box bolted underneath. A warden is on the far side of the square, coming round.`], [
     {t:"The notice board", r:[`CALM BULLETIN. Weather Visit on Lantern Row: one resident was lost to the weather. Lost this week: 14.`]},
     {t:"The stone", r:[`POPULATION OF VESSEN: <b>412,000</b>. A new brass plate is screwed on every year. Every plate says the same number.`]},
     {t:"The young woman on the bench", go:mina},
     {t:"The grey box on the siren post", key:1, r:[`It isn't locked. Nobody would dare. Inside: a clockwork wheel with one peg in it, and a label: <b>WED 23:10</b>.`, `Weather doesn't keep appointments. Clerks do.`]}],
-    () => go("night2"));
+    () => go("night2"),
+    {time:3, meter:"WARDEN", flag:"lsquare", late:[`The warden has come all the way round, and is walking straight at you, not hurrying.`,
+      `You walk past the siren post as if you were going somewhere, and lift the lid of the grey box with one finger as you pass. A clockwork wheel with one peg in it, and a label: <b>WED 23:10</b>.`,
+      `Weather doesn't keep appointments. Clerks do. The warden watches you all the way out of the square, and then writes.`]});
 };
 STEP.night2 = function(){
   at("SAT 23:30", 1);
@@ -1811,12 +1888,16 @@ STEP.night2 = function(){
 STEP.ward = function(){
   at("SUN 23:55", 1);
   const morn = () => go("tomas");
-  story("east", [pic("east"), `The east gate stands open at night, for the vans. Nobody guards it, because nobody in Vessen goes out at night.`, `Morrow Flats. The Kalder Works: sealed in concrete, no cloud, no smell, a bird asleep on the warning sign.`, `Beyond it the old sanatorium: <b>SECTOR 5</b>. One side door has a light over it. Inside, an orderly walks a long ward with a torch.`], null, [
-    {t:"Wait until the torch is at the far end. Then slip in.", f:() => look("s5", "Find Ivo.", [`Two rows of beds. Everyone asleep, each with a drip, and a chart at the foot. The torch is at the far end. You have a few minutes.`], [
+  story("east", [pic("east"), `The east gate stands open at night, for the vans. Nobody guards it, because nobody in Vessen goes out at night.`, `Morrow Flats. The Kalder Works: sealed in concrete, no cloud, no smell, a bird asleep on the warning sign.`, `Beyond it the old sanatorium: <b>SECTOR 5</b>. One side door has a light over it. Inside, an orderly walks a long ward with a torch. You wait until the torch is at the far end. Then you slip in.`],
+    () => look("s5", "Find Ivo before the torch comes back.", [`Two rows of beds. Everyone asleep, each with a drip, and a chart at the foot. Somewhere, faintly, a smell you know.`], [
       {t:"The nearest chart", r:[`A woman, asleep. On her chart one name is crossed out and another written under it. <b>RE-ISSUE.</b> Fresh name, fresh file, fresh flat.`]},
       {t:"The one empty bed", r:[`Made up and waiting. Its chart is already filled in. No name. Only a mark: [mark] and one word: <b>RECURS</b>.`]},
-      {t:"The bed that smells of bread", key:1, r:[`Ivo. Asleep, with flour still under his nails.`, `On his chart KESSEL, I. is crossed out. Under it: <b>RE-ISSUE AS TOMAS RELL. PLACE: 4-13 LANTERN ROW.</b>`, `They don't die in the Weather. They are washed, and handed back.`]}], morn)},
-    {t:"Go in now.", risk:1, f:() => { flag("early"); story("s5", [pic("s5"), `The torch finds you at once. <g>"You're early, resident. Your bed isn't ready."</g>`, `The orderly walks you out past the beds. Everyone asleep, each with a chart: one name crossed out, another written under it.`, `You pass Ivo. On his chart KESSEL, I. is crossed out. Under it: <b>RE-ISSUE AS TOMAS RELL. PLACE: 4-13 LANTERN ROW.</b>`, `At the door the orderly writes something on the chart of the one empty bed.`], morn); }}]);
+      {t:"The orderly's desk", r:[`A ledger, open. Tonight's column is headed WASHED. Tomorrow's is headed PLACED. Fourteen names in each, and they are not the same fourteen names.`]},
+      {t:"The bed that smells of bread", key:1, r:[`Ivo. Asleep, with flour still under his nails.`, `On his chart KESSEL, I. is crossed out. Under it: <b>RE-ISSUE AS TOMAS RELL. PLACE: 4-13 LANTERN ROW.</b>`, `They don't die in the Weather. They are washed, and handed back.`]}], morn,
+      {time:2, meter:"TORCH", flag:"lward", late:[`The torch swings round and finds you. <g>"You're early, resident. Your bed isn't ready."</g>`,
+        `The orderly walks you out past the beds. Everyone asleep, each with a chart: one name crossed out, another written under it. One bed smells of bread.`,
+        `Ivo. On his chart KESSEL, I. is crossed out. Under it: <b>RE-ISSUE AS TOMAS RELL. PLACE: 4-13 LANTERN ROW.</b>`,
+        `At the door the orderly writes something on the chart of the one empty bed.`]}));
 };
 STEP.tomas = function(){
   at("MON 07:15");
@@ -1828,13 +1909,18 @@ STEP.press = function(){
   at("MON 23:50", 1);
   const next = () => go("flat");
   story("press", [pic("press"), `The hatch isn't locked. Nobody would dare. Twelve steps down, in the dark, and then your hand finds a switch that still works.`],
-    () => look("press", "Find F. Aster's desk.", [`A cellar. Desks under dust sheets. A printing press. Dust on everything, except one desk.`], [
+    () => look("press", "Find F. Aster's desk.", [`A cellar. Desks under dust sheets. A printing press. Dust on everything, except one desk. Up in the alley, the warden's round will be back soon.`], [
       {t:"The photograph on the wall", r:[["raw", photoLines()], `The night desk. The picture from page 602. Somebody has drawn a pencil ring round one face: the one with the bandage.`]},
       {t:"The bread tin", r:[`KESSEL'S, LANTERN ROW. He fed the night shift. The crumbs are twenty-two years old.`]},
+      {t:"The printing press", r:[`The last forme is still locked in it, the type back to front. You read the headline with your fingers: STAY INDOORS 48 HOURS. They stopped the press with the page still in it.`]},
       {t:"The clean desk", key:1, r:[`A proof, never printed: LEAK AT KALDER WORKS. <m>By F. Aster.</m>`, `In the drawer, in pencil: <m>If they take me: reader 7. The number is under my kitchen table.</m>`, `F. Aster's kitchen table. In flat 4-12.`]}],
       () => story("press", [`The proof is one sheet. It would fold small enough to go inside a coat.`], null, [
         {t:"Take the proof with you.", f:() => { flag("proof"); story("press", [`You fold it in four and put it against your chest. It crackles when you breathe.`, `It is the first thing you have ever owned that is older than Q.Y. 19.`], next); }},
-        {t:"Leave it where F. left it.", f:() => story("press", [`You square it on the desk, the way it was. Whoever comes down here next should find it too.`, `It occurs to you that the next one down here may be you.`], next)}])));
+        {t:"Leave it where F. left it.", f:() => story("press", [`You square it on the desk, the way it was. Whoever comes down here next should find it too.`, `It occurs to you that the next one down here may be you.`], next)}]),
+      {time:2, meter:"ROUND", flag:"lpress", lateDone:() => { flag("proof"); next(); }, late:[`Boots in the alley, and a torch across the hatch. The warden's round.`,
+        `You snatch the top sheet off the one clean desk and stand behind the press, not breathing, until the boots go on. Then you read what you took. A proof, never printed: LEAK AT KALDER WORKS. <m>By F. Aster.</m>`,
+        `On the back, in pencil: <m>If they take me: reader 7. The number is under my kitchen table.</m>`,
+        `F. Aster's kitchen table. In flat 4-12. On your way out, a rotten step goes through under your foot. It is very loud.`]}));
 };
 STEP.flat = function(){
   at("TUE 01:10", 1);
@@ -1864,13 +1950,18 @@ STEP.harbour = function(){
   at("TUE 23:20", 1);
   const next = () => go("wedmorn");
   story("harbour", [pic("harbour"), `Tonight the chain across the harbour mouth is down. A barge is tied up at the quay with no lights showing, and men are carrying crates off it into a grey van.`, `You get behind a crane.`],
-    () => look("harbour", "Watch the barge. Find out where it comes from.", [`The men work without talking. They aren't wearing grey. One has a red scarf. You haven't seen red cloth in years.`], [
+    () => look("harbour", "Watch the barge. Find out where it comes from.", [`The men work without talking. They aren't wearing grey. One has a red scarf. You haven't seen red cloth in years. They will be back for the next load in a moment.`], [
       {t:"The crates", r:[`Stencilled on every one: <b>K.R.T. VESSEN RELIEF</b>. And smaller: <c>HANDLE WITH GLOVES. ZONE GOODS ARE NOT RETURNED.</c>`]},
       {t:"The men", r:[`They wear masks, pulled down while they work. One of them laughs at something. A real laugh, careless, that carries over the water.`, `Nobody in Vessen laughs like that. He is from somewhere where it is safe to.`]},
-      {t:"The newspaper on the bollard", key:1, r:[`Somebody has left it under a mug. A newspaper. Printed this week. You haven't seen one for twenty-two years, and you know exactly what it is.`, `<b>VESSEN: 22ND YEAR OF CARE.</b> <c>Trust asks Ministry to raise the daily rate. "The afflicted remain too unwell to be moved," say Trust readers. 412,000 in care.</c>`, `There is a whole world out there. It thinks you are ill, and it is paying.`]}],
+      {t:"The newspaper on the bollard", key:1, r:[`Somebody has left it under a mug. A newspaper. Printed this week. You haven't seen one for twenty-two years, and you know exactly what it is.`, `<b>VESSEN: 22ND YEAR OF CARE.</b> <c>Trust asks Ministry to raise the daily rate. "The afflicted remain too unwell to be moved," say Trust readers. 412,000 in care.</c>`, `There is a whole world out there. It thinks you are ill, and it is paying.`]},
+      {t:"The grey van", r:[`SECTOR 5 on the side, the same van that brings the new arrivals. Tonight it is taking tins. The driver is asleep with a forecast over his face.`]}],
       () => story("harbour", [`The man with the red scarf comes back for his mug. He is four steps from you. He hasn't seen you.`], null, [
         {t:"Stay behind the crane until the barge has gone.", f:() => story("harbour", [`He picks up the mug and the newspaper, looks out at the taped windows of the city, and shakes his head, the way you would outside a hospital.`, `The barge leaves without lights. The chain comes up behind it.`], next)},
-        {t:`Step out. Say: "The air is clean. We aren't ill."`, risk:1, f:() => { flag("call"); story("harbour", [`He screams. A grown man. He drags his mask up and backs away with his hands out, as if you were on fire.`, `<g>"It's one of them! It's awake! They're not meant to be awake!"</g>`, `A whistle. Boots. You run. Behind you the barge is already casting off, and somebody is shouting for the wardens, and the wardens are coming at once, because for the men on the barge they always come at once.`], next); }}])));
+        {t:`Step out. Say: "The air is clean. We aren't ill."`, risk:1, f:() => { flag("call"); story("harbour", [`He screams. A grown man. He drags his mask up and backs away with his hands out, as if you were on fire.`, `<g>"It's one of them! It's awake! They're not meant to be awake!"</g>`, `A whistle. Boots. You run. Behind you the barge is already casting off, and somebody is shouting for the wardens, and the wardens are coming at once, because for the men on the barge they always come at once.`], next); }}]),
+      {time:2, meter:"MEN", flag:"lharb", lateDone:next, late:[`The man with the red scarf is coming back along the quay, straight towards your crane. You have been looking at the wrong things.`,
+        `He stops at a bollard two steps away, and picks up a mug, and a newspaper from under it. A newspaper. Printed this week. For a moment the front page is turned your way.`,
+        `<b>VESSEN: 22ND YEAR OF CARE.</b> <c>Trust asks Ministry to raise the daily rate. 412,000 in care.</c>`,
+        `He looks up, straight at the crane. Then he decides he has seen nothing, the way people outside must decide it every day, and walks back to the barge faster than he came. Somebody on the barge blows a whistle.`]}));
 };
 STEP.wedmorn = function(){
   at("WED 07:30");
@@ -1929,8 +2020,8 @@ function leaveNote(kind){
   ({calm:[`Your card is an inch from the reader. Your other hand is still on the keys.`],
     copy:[S.fl.named ? `You turn the brass key in the lock beside EDIT. The reader wakes up all the way.` : null, `<m>COPY 317 TO 100?</m> the reader asks. It has never asked you anything before.`, `<m>YES.</m> A bar starts to crawl across the bottom of the screen.`],
     run:[`You stand up. The attendant doesn't.`, `<g>"Of course, resident. The Visit isn't until 23:10. Take the air."</g>`, `Your hand is still on the keys.`]})[kind].forEach(t => { if (t) doc.push(["p", t], ["gap"]); });
-  doc.push(["p", `You have a minute. EDIT will take one hidden line. Type something for the ${ord(RUN() + 1)}, then press Enter.`], ["gap"], ["p", "<c>Enter on its own leaves the line as it was.</c>"]);
-  show(Object.assign({kind:"narr", pg:"---", label:"READER 7", doc, slow:true, prompt:{label:"EDIT", f:v => {
+  doc.push(["p", `You have one minute: the bar below. EDIT will take one hidden line. Type something for the ${ord(RUN() + 1)}, then press Enter.`], ["gap"], ["p", "<c>When the bar runs out, the line is cut off where it stands.</c>"]);
+  show(Object.assign({kind:"narr", pg:"---", label:"READER 7", doc, timer:{end:Date.now() + 60000, ms:60000}, prompt:{label:"EDIT", f:v => {
     const t = safe(v).trim().slice(0, 72); if (t) META.note = t; saveMeta(); if (kind === "run") runOut(); else ending(kind);
   }}}, RR));
 }
@@ -1960,7 +2051,10 @@ function fileDoc(kind){
   if (f.sign) add(`Uncovered the sign of Kessel's Bakery. <b>Noted.</b> Painted over on Saturday.`, 1); else if (f.shop) add(`Scratched a shop sign. Four letters. Left as found.`);
   if (f.mina) add(`Spoke to M. Hale, 18, in the square. She began to search. Lost to the weather, Sunday night. <b>She had never been re-issued before. She was the last person in Vessen who remembered being a child.</b>`, 1); else add(`M. Hale, reader 2: steady. Still reading her one page.`);
   if (f.van) add(`Followed a Sector 5 van after dark. <b>Noted.</b>`, 1);
-  if (f.early) add(`Walked into the Sleep Lines before your bed was ready. <b>Noted twice.</b>`, 1);
+  if (f.lshop || f.lsquare || f.lpress) add(`Seen loitering: ${[f.lshop && "a vacant shop", f.lsquare && "the siren post", f.lpress && "Press Street"].filter(Boolean).join(", ")}. <b>Noted.</b>`, 1);
+  if (f.lward) add(`Found awake on the Sleep Lines before your bed was ready. <b>Noted twice.</b>`, 1);
+  if (f.lharb) add(`Seen by Trust staff at the harbour. <b>Noted.</b>`, 1);
+  if (f.caught) add(`Caught with an uncalm page on your screen, ${times(f.caught)}. <b>Noted.</b>`, 1);
   if (f.clerk) add(`Asked the Housing Office about yourself. <b>Noted.</b>`, 1);
   if (f.red) add(`Reading Room lamp reached red. <b>Noted.</b>`, 1);
   if (f.call) add(`Showed yourself to Trust staff at the harbour. <b>Noted twice.</b> One bargeman retired, unwell.`, 1);
@@ -1973,7 +2067,7 @@ function fileDoc(kind){
 }
 function ending(kind){
   const r = RUN(), st = {readN:Object.keys(S.read).length, total:A.length, hints:S.hintsUsed}, gone = ivoGone(), file = fileDoc(kind);
-  const WHY = {call:"A man on a barge is still shaking.", early:"You walked into the ward before your bed was made.", sign:"Gold letters, in the street.", van:"You followed a van.", name:"You said a retired name across a counter.", clerk:"You asked the clerk about yourself.", red:"You asked my readers for every wrong word there is."};
+  const WHY = {call:"A man on a barge is still shaking.", lward:"You were found on the ward before your bed was made.", lharb:"The men on the barge saw you.", caught:"I have read a good deal over your shoulder this week.", lpress:"You put your foot through a step on Press Street.", lshop:"You stood too long at a vacant shop.", lsquare:"You were seen at the siren post.", sign:"Gold letters, in the street.", van:"You followed a van.", name:"You said a retired name across a counter.", clerk:"You asked the clerk about yourself.", red:"You asked my readers for every wrong word there is."};
   const why = Object.keys(WHY).filter(k => S.fl[k]).slice(0, 2).map(k => WHY[k]).join(" ");
   META.endings[kind] = 1; META.names.push(S.name); META.names = META.names.slice(-2); META.runs = (META.runs || 0) + 1; saveMeta(); lsDel(LS);
   const day1 = [pic("home")].concat(gone ? [
@@ -2053,6 +2147,8 @@ function resumeGame(sv){
 setInterval(() => {
   phase++; statusTick();
   if (V && V.alt && phase % 2 === 0) altPhase ^= 1;
+  patrolTick();
+  if (V && V.timer && TIMED && Date.now() >= V.timer.end){ const f = V.prompt.f, v = kin.value; kin.value = ""; sBuzz(); f(v); }
   if (S && V && V.kind === "page" && !V.alt && !busy && !S.event){
     if (S.min >= 1080 && !S.closed){ S.closed = true; box(`"We close at six," the attendant says. "But stay. For you, we stay open."`); }
     else if (S.sus >= 80 && S.warned < 2) EV.warn2(); else if (S.sus >= 50 && S.warned < 1) EV.warn1();
@@ -2087,7 +2183,7 @@ $("#kenter").onclick = () => { ac(); const v = kin.value; kin.value = ""; submit
 addEventListener("resize", resize);
 if (window.visualViewport) visualViewport.addEventListener("resize", resize);
 
-if (TEST) window.__g = { get S(){ return S; }, get V(){ return V; }, key:v => { submit(v); refresh(); }, text:() => { compose(); return screenText(); }, busy:() => busy, META:() => META, pick, heat, ivoGone,
+if (TEST) window.__g = { get S(){ return S; }, get V(){ return V; }, key:v => { submit(v); refresh(); }, text:() => { compose(); return screenText(); }, busy:() => busy, META:() => META, pick, heat, ivoGone, hot:() => isHot(), round:() => patrolPass(), PAT,
   demo:(pl, night) => { at(night ? "SAT 23:30" : "SAT 14:00", night); story(pl, [pic(pl), ["dh", PLACE[pl].col == null ? Y : PLACE[pl].col, PLACE[pl].name], ["gap"], "A place in Vessen, as it looks on the screen. The bar above and the stripe at the left tell you where you are."], null, [{t:"One thing to do here.", f:() => 0}, {t:"Another thing to do here.", f:() => 0}], {compact:1}); },
   demoMap:(here, night) => { at("SAT 14:00", night); story("vessen", [["raw", cityLines(ORDER, here)], ["task", "Go to the Civic Reading Room. Search the back pages for Ivo Kessel."], ["gap"]], null, ORDER.map(p => ({t:HNAME[p], f:() => 0})), {compact:1}); } };
 titleView(); resize();
