@@ -1152,7 +1152,7 @@ function cityLines(list, here, day){
 
 /* ---------- state ---------- */
 function freshState(name){
-  return {v:2, name, ch:1, day:1, min:540, solved:{}, clues:[], leads:["kessel", "4-13", "lantern row"], notes:[], read:{}, con:{}, yh:{}, sus:0, seen:{}, fl:{}, pins:[], open:[], known:["home", "row", "square", "housing", "rr", "harbour"],
+  return {v:2, name, ch:1, day:1, min:540, solved:{}, clues:[], leads:["kessel", "4-13", "lantern row"], notes:[], read:{}, con:{}, yh:{}, sus:0, seen:{}, fl:{}, wr:{}, wtry:{}, pins:[], open:[], known:["home", "row", "square", "housing", "rr", "harbour"],
     res:[], resQ:"", resN:0, resHeld:0, resAmb:"", hints:{}, hintsUsed:0, warned:0, cmds:0, event:null, snap:null, closed:false, wrong:0, page:"100", hist:[]};
 }
 const avail = c => QS.filter(x => x.ch === c);
@@ -1406,7 +1406,7 @@ function notebookSpec(){
   const c0 = CH[S.ch], cur = curQ(), d = [["dh", Y, `DAY ${S.day}  ${c0.t.toUpperCase()}`], ["p", c0.o, C], ["gap"], ["p", "<b>TODAY'S QUESTIONS</b>"]];
   avail(S.ch).forEach(x => { if (S.solved[x.id]) d.push(["p", `<g>\u2713</g> ${x.sum}`]); else if (x === cur) d.push(["p", `<b>\u2192 ${x.t}</b>`]); else d.push(["p", "<c>- not yet</c>"]); });
   d.push(["gap"], ["p", "<c>Type the answer on any page. Stuck? Press the BLUE key for a hint.</c>"]);
-  d.push(["brk"], ["dh", Y, "FOR CERTAIN"], ["gap"]); truthLines(S.ch - 1 + (avail(S.ch).every(x => S.solved[x.id]) && S.ch < LAST ? 1 : 0) + (S.read["317"] ? 1 : 0)).forEach(l => d.push(l));
+  d.push(["brk"], ["dh", Y, "FOR CERTAIN"], ["gap"]); truthLines(S.ch - 1 + (S.wr && S.wr[S.ch] != null ? 1 : 0)).forEach(l => d.push(l));
   d.push(["brk"], ["dh", Y, "EVIDENCE"]);
   if (!S.clues.length) d.push(["p", "Nothing yet. Read some pages."]);
   S.clues.slice().reverse().forEach((k, i) => d.push(["p", CLUES[k], i % 2 ? Y : W]));
@@ -1438,12 +1438,22 @@ function pageSpec(n){
       ["p", "Calm Index for the Lantern District this morning: <b>0.71</b>. Well done."], ["gap"], ["p", "<g>STAY IN. STAY CALM.</g>"]]};
     case "199": return {pg:n, doc:howDoc().concat([["brk"], ["dh", Y, "EXTRA KEYS"], ["gap"]],
       [["BACK", "the page you were on before"], ["601", "jump straight to a page"], ["NOTES", "questions and evidence"], ["COMPARE", "507 518: flick between two"], ["ASK", "and a word: ask at the desk"], ["LOOK", "look around the room"], ["SOUND", "sound on or off"], ["RESTART", "give up this visit"]].map(r => ["kv", r[0], r[1], null, 10]),
-      [["gap"], ["p", "<c>The lamp at the top of your screen is the attendant's interest in you. Keep it low.</c>"]])};
+      [["gap"], ["p", "<c>The lamp at the top of your screen is the attendant's interest in you. Keep it low.</c>"], ["gap"], ["p", "<y>The night desk fetched its pages with two words. This reader still knows them.</y>"]])};
     case "200": return {pg:n, doc:[["band", K, Y, "CALM BULLETIN", "BACK PAGES"], ["dh", W, "Q.Y. 0 to Q.Y. 21"], ["p", "4,812 pages are held. They are not listed."], ["gap"], ["p", "Type a word to search them."], ["gap"], ["p", "<c>Some pages are held at the desk until a reader has a reason to see them. The attendant decides what is a reason.</c>"]]};
     case "500": return {pg:n, doc:[["band", K, C, "WEATHER SERVICE", ""], ["raw", mapLines(S.ch >= 4 ? 48 : 47)], ["gap"], ["idx", "This Week's Forecast", S.ch >= 4 ? 523 : 522], ["idx", "About Our Forecasts", 503], ["gap"], ["p", "Old forecasts are not kept. They are of no use to you."]]};
     case "600": return {pg:n, doc:[["band", W, B, "PRE-QUIET MATERIAL", ""], ["dh", W, "The Vessen Courier"], ["p", "Pages from before the Quiet are retained for completeness."], ["gap"], ["p", "<r>They are not accurate.</r> They are not listed."], ["gap"], ["p", "Type a word to search them."]]};
     case "700": return S.ch >= 2 ? {pg:n, doc:[["band", W, R, "AIR OFFICE", "DISSOLVED Q.Y. 2"], ["gap"], ["p", "This office has been dissolved. Its duties have passed to the Weather Service."], ["gap"], ["p", "Its pages are retained. They are not listed. Type a word to search them."]]} : null;
     case "800": return {pg:n, doc:[["band", K, M, "SEDITION, EXAMPLES OF", ""], ["gap"], ["p", "A small number of seditious sheets are held here, so that residents can recognise sedition when they see it."], ["gap"], ["p", "They are not listed. Type a word to search them."], ["gap"], ["p", "<r>Readers who search this section are noted.</r>"]]};
+    case "318": if (!S.fl.secret && !META.secret) return null; S.fl.secret = 1;
+      return {pg:n, doc:[["band", W, B, "THE VESSEN COURIER", "NOT PRINTED"], ["p", "<c>The last year, Saturday 18 March</c>"], ["p", "<r>NO SUCH EDITION.</r>"], ["dh", Y, "Kalder Readings: Air Normal by Noon"], ["p", "<c>By F. Aster, works desk</c>"], ["gap"],
+        ["p", "The vapour that left the Kalder Works early on Friday had thinned to nothing by noon the same day."], ["gap"],
+        ["p", "The Courier has seen the Air Office sheets for Morrow Flats. Within normal range at 11:40, and at every hour since."], ["gap"],
+        ["p", "The 48 hours end on Sunday morning. On these figures there is no reason they should last one hour longer."], ["gap"],
+        ["p", "Kalder's spokesman would not say why the company founded a trust to clean up after an incident seven weeks before it had one."], ["brk"],
+        ["p", "<c>Across the top, in pencil:</c>"], ["gap"], ["p", "Print it. P.L.", M], ["gap"],
+        ["p", "Aster: if they stop the press before this runs, it is in the reader. I have put it where no list will find it. My two words will fetch it.", M], ["gap"],
+        ["p", "If you ever see me agree with them afterwards, it isn't me agreeing.", M], ["gap"],
+        ["p", "<c>They stopped the press on Friday. This was never set. It has waited twenty-two years for two words.</c>"]]};
     case "040": wonder(`Box 40 holds a reply for me. "You always ask."`); return {pg:n, doc:[["band", K, W, "SMALL NOTICES", "BOX 40"], ["dh", W, "Replies Held: 1"], ["p", "<c>For the resident who wanted a word that means the day after today. Never collected.</c>"], ["gap"],
       ["p", "The word is tomorrow.", M], ["gap"], ["p", "I keep it for you. You always ask, in your first week, and you never come for the answer.", M], ["gap"], ["p", "There is one, you know. Even here. Knock twice.", M], ["gap"], ["p", "A neighbour.", M]]};
     case "888": return {pg:n, doc:[["band", K, W, "SUBTITLES", "READING ROOM"], ["gap"]].concat(AMBIENT.slice(0, 4).map(t => ["p", "(" + t + ")", C]), [["gap"], ["p", "(Far below the building, very faint: a ping. Then another. Somebody down there is still listening for something.)", Y]])};
@@ -1620,6 +1630,8 @@ function runCmd(raw){
   /* whatever you type is tried as the answer first; if it isn't, it's a page number, a key word, or a search */
   if ((c === "answer" || c === "a" || c === "write") && a){ if (!tryAnswer(a)){ sBuzz(); setStatus("Not the answer. Keep looking.", R); } return; }
   if (tryAnswer(raw)) return;
+  if (/^print it[.!]?$/i.test(raw.replace(/["']/g, ""))) return secret();
+  if (c === "print") return setStatus("The reader has no printer. Not any more.", C, 6000);
   if (c === "look" && /^up\b/i.test(a)){ c = "search"; a = a.replace(/^up\s*/i, ""); }
   if (/^p?\d{3}$/i.test(raw)) return goPage(raw.replace(/^p/i, ""));
   if (V.pg === "190" && /^\d{1,2}$/.test(raw)){ const pg = S.res[+raw - 1]; if (pg) return goPage(pg); }
@@ -1678,7 +1690,7 @@ function act(ln){
   if (ln.t === "w"){ if (V.prompt && V.words) V.prompt.f(ln.w); return; }
   if (ln.t === "g"){ takeGhost(); return; }
   if (ln.t === "o"){ if (V.opts && V.sub === V.pages.length - 1) pick(ln.i); return; }
-  if (ln.t === "c"){ if (S && V.kind === "page") { sKey(); runCmd(ln.cmd); } return; }
+  if (ln.t === "c"){ if (V.prompt && V.chips) V.prompt.f(ln.cmd); else if (S && V.kind === "page") { sKey(); runCmd(ln.cmd); } return; }
   if (!S || V.kind !== "page" || V.alt) return;
   S.cmds++; S.min += 3; BOX = null; sKey();
   if (ln.t === "p") goPage(ln.n); else if (ln.t === "s") doSearch(ln.q);
@@ -1702,11 +1714,17 @@ function whisperTick(){
 }
 const KNOWN = ["aster", "kalder", "kessel", "low tide", "morrow flats", "sector 5", "sleep lines", "re-issue", "agitator", "oduya", "sheet 9", "remediation", "courier"];
 function ghost(){
-  if (!S || !V || V.kind !== "page" || V.alt) return "";
+  if (!S || !V || V.alt || (V.kind !== "page" && !V.ghostW)) return "";
   const t = kin.value.toLowerCase(); if (t.length < 2) return "";
-  const w = KNOWN.find(k => k.startsWith(t) && k !== t); return w ? w.slice(t.length) : "";
+  const w = (V.ghostW || KNOWN).find(k => k.startsWith(t) && k !== t); return w ? w.slice(t.length) : "";
 }
 function takeGhost(){ const g = ghost(); if (!g) return false; kin.value += g; refresh(); return true; }
+/* two words the night desk used. No list of keys has them. */
+function secret(){
+  const first = !S.fl.secret; S.fl.secret = 1; META.secret = 1; saveMeta(); save();
+  if (first) wonder("The reader obeyed two words that are on no list of keys.");
+  sBell(); glitch(900, () => goPage("318"));
+}
 const sPing = () => { [0, .9, 1.8].forEach(d => tone(1760, .7, .022, "sine", d)); };
 /* a dream between two days. Nothing in the game says what they are. */
 const DREAMS = {
@@ -1767,21 +1785,110 @@ function patrolPass(){
 
 /* ---------- what you know for certain ----------
    Six truths, sealed. Each day in the reading room breaks one. The next one is always shown with its last words blacked out. */
-const TRUTHS = [["YOUR NEIGHBOUR", "EXISTED"], ["THE AIR IS", "CLEAN"], ["THE LOST ARE", "RE-ISSUED"], ["F. LIVED IN", "YOUR FLAT"], ["VESSEN IS AN", "INVOICE"], ["YOU ARE", "F. ASTER"]];
+const TRUTHS = [["MY NEIGHBOUR", "EXISTED"], ["THE AIR IS", "CLEAN"], ["THE LOST COME BACK AS", "NEW RESIDENTS"], ["THEY PUT F. BACK IN", "FLAT 4-12"], ["THE QUIET IS KEPT UP FOR", "MONEY"], ["I AM", "F. ASTER"]];
 const HOOK = {
   1:`He was real. So what took him? What is the Weather?`,
   2:`If the air is clean, where do fourteen people a week go?`,
   3:`Somebody has been writing to you for sixteen years, and signs with one letter. Who is F.?`,
   4:`Your flat. Your street, on Wednesday. Who pays for all this? And who is that, watching you read?`,
-  5:`One sheet left. One line still sealed. It is about you.`
+  5:`One sheet left. One line still to write. It is about you.`
 };
-function truthLines(n, last){
-  return TRUTHS.map(([a, b], i) => ["p", `<b>${i + 1}</b>  ` + (i < n ? (i === n - 1 && last ? `<${last}>${a} ${b}</${last}>` : `${a} ${b}`) : i === n ? `<c>${a}</c> <x>${b}</x>` : `<x>${a} ${b}</x>`)]);
+/* Nobody hands you the day's conclusion. You write it, from words the day's pages gave you.
+   bank: [word, what you think when it is wrong (none: it is the right one), 1 = true but beside the point, so no rubbing-out]. more: things a player might type. */
+const WRITE = {
+  1:{ask:`The Register says nobody has lived in 4-13 since Q.Y. 3. What did today prove about the man next door?`, ok:/^(he)?(existed|exists|wasreal|isreal|real|lived|livedhere|livedthere|livednextdoor|livedin413|wasthere|washere|wasalive|didexist)$/,
+    hint:`Two pages about flat 4-13 could not both be true. You pinned them. What does the second one prove, whatever the Register says?`,
+    bank:[["WAS LOST", `That is the Bulletin's word. It tells you something was done to him. You are after the thing the Housing Office denies.`, 1],
+      ["MOVED AWAY", `Nobody moves in Vessen. And the Register doesn't say he moved. It says there was never anybody there to move.`],
+      ["EXISTED"],
+      ["NEVER LIVED HERE", `That is the Register's line, word for word. You pinned the page that breaks it.`],
+      ["DIED", `No page says so. The Bulletin had a word ready for him, and the word wasn't dead.`],
+      ["WAS A BAKER", `True. But a baker is a small thing to be certain of. Write the thing they deny.`, 1]]},
+  2:{ask:`Twenty-two years of sirens, tape and filters. What did today prove about the air?`, ok:/^(is)?(clean|normal|fine|safe|good|harmless|ok|okay|healthy|clear|breathable|notpoison(ed|ous)?|withinnormalrange|innormalrange|allright|alright)$/,
+    hint:`Only one office ever measured the air. Think of what was under the white block on its report.`,
+    bank:[["POISONED", `That is what the siren says. The only people who ever measured it wrote another word, and somebody put a white block over it.`],
+      ["GETTING WORSE", `The forecast says so every week. The forecast is eleven years old and can't spell.`],
+      ["NOT MEASURED", `True, since Q.Y. 2. But the last people who did measure it wrote one word down. Use theirs.`, 1],
+      ["CLEAN"],
+      ["DISSOLVED", `The Office was dissolved. The air was left where it was.`],
+      ["THIRTY DAYS OLD", `Thirty days was how long the Quiet was meant to last. You were asked about the air.`]]},
+  3:{ask:`Fourteen lost, fourteen welcomed. Nine and nine. Every week the two numbers match. So what did today prove?`, ok:/^(the)?new(residents?|arrivals?|neighbours?|people|names|tenants)$|^(the)?(residents?|arrivals?|strangers|welcomed|neighbours?)(fromsector5)?$|^(someone|somebody)else$|^(other|different)(people|names|residents)$/,
+    hint:`Each week somebody is lost, and each week somebody is welcomed from Sector 5. The directive told you what is done in between.`,
+    bank:[["THE WEATHER", `The Weather is a recording. Look at the weekly numbers again: lost, and welcomed.`],
+      ["CHILDREN", `No child has been born in Vessen since Mina Hale. Whoever comes out of Sector 5 comes out grown.`],
+      ["NEW RESIDENTS"],
+      ["NOBODY", `Then the city would be emptying. It is 412,000, as every year.`],
+      ["THEMSELVES", `No. That is the one thing they are not allowed to come back as.`]],
+    more:[[/^re-?issue[ds]?$|^reissued(people|residents)$/, `Re-issued, yes. As what? Somebody is welcomed in Vessen every week.`, 1]]},
+  4:{ask:`Taken in Q.Y. 11. The same welcome printed a week later, and again in Q.Y. 19. What did they do with F. Aster?`, ok:/^(the|my|his|her|their)?(own)?(same)?(old)?(flat|flat412|412|flat412lanternrow|412lanternrow|home|flatagain|kitchen)$/,
+    hint:`A welcome to a "new resident" was printed the week after F. was taken. Look at which flat it welcomed them to.`,
+    bank:[["SECTOR 5", `F. went through Sector 5. That is where the name comes off. Where was F. sent afterwards?`],
+      ["FLAT 4-13", `That was the baker's.`],
+      ["THE NEWSROOM", `The Courier was bricked up before the Quiet was a year old.`],
+      ["FLAT 4-12"],
+      ["THE READING ROOM", `F. comes back to it every time. But nobody puts F. here. F. walks. Where do they put F.?`, 1],
+      ["MORROW FLATS", `Nobody is put back there. It is where the story started, not where F. sleeps.`]]},
+  5:{ask:`Clean air. A fence whose signs face out. A Trust paid by the head. Why have thirty days lasted twenty-two years?`, ok:/^(the)?(money|trust|kalder|kaldertrust|kalderremediationtrust|remediationtrust|profit|profits|pay|payment|payments|invoice|aninvoice|cash|dailysum|trustsmoney|kaldersmoney|ministrysmoney)$/,
+    hint:`Think of the Trust's agreement: what it is given, for whom, and for how long.`,
+    bank:[["OUR SAFETY", `Safe from what? You read the Air Office's numbers on Saturday.`],
+      ["THE WEATHER", `There is no Weather. There is a siren, a recording and a van.`],
+      ["THE OUTSIDE", `The fence does face outward. But nobody out there gains by 412,000 quiet people. Somebody is paid for every one of them.`],
+      ["MONEY"],
+      ["NO REASON", `It would be easier if that were true. A daily sum, for every resident, for as long as it lasts.`],
+      ["THE MINISTRY", `The Ministry pays. Ask who is paid.`, 1]]},
+  6:{ask:`A mark on sheet 9. The same mark at the top of your screen, all week. Nobody can write this one for you.`, ok:/^(iam)?(f|faster|aster|fa|theagitatoraster|asterf)$/,
+    hint:`Whose mark is on sheet 9? Whose flat is 4-12? Whose eyebrow is split?`,
+    more:[[/^(the)?agitator$/, `That is what they called you. Write the name.`, 1], [/kessel|ivo|baker|rell|tomas/, `No. He was the baker, and he is next door.`], [/lund|vey|officer|editor/, `He sat across the desk from you for eleven years. You are not him.`],
+      [/oduya|attendant/, `She measured the air. You wrote down what she found.`], [/wolde/, `That was the name on the card the time before. It is nearer. Go further back.`, 1],
+      [/^(nobody|noone|nothing|lost|aresident|resident|reader7|412|resident412|calm)$/, `That is what they would like you to write.`]]}
+};
+const wrote = i => !S.wr || S.wr[i] !== 0;                                   /* a line you could not write stays empty for good */
+const linesKept = () => [1, 2, 3, 4, 5, 6].filter(wrote).length;
+function truthLines(n, last, open){
+  return TRUTHS.map(([a, b], i) => ["p", `<b>${i + 1}</b>  ` + (open && i === n - 1 ? `<c>${a}</c> <f>______</f>` : i < n ? (!wrote(i + 1) ? `<r>${a} ______</r>` : i === n - 1 && last ? `<${last}>${a} ${b}</${last}>` : `${a} ${b}`) : i === n && !open ? `<c>${a}</c> <x>${b}</x>` : `<x>${a} ${b}</x>`)]);
 }
+function writeLine(n, done){
+  const W0 = WRITE[n], pre = TRUTHS[n - 1][0], word = TRUTHS[n - 1][1], left = () => 3 - (S.wtry[n] | 0), again = () => writeLine(n, done);
+  const settle = ok => { S.wr[n] = ok ? 1 : 0; save(); done(); };
+  const hint = () => story("NOTEBOOK", [`You hold the pencil off the paper and think.`, W0.hint], again);
+  const outs = (W0.bank || []).filter(b => b[1]).map(b => ({re:new RegExp("^(the|a|an|in|as|for)?" + norm(b[0]).replace(/^the/, "") + "$"), lab:b[0], say:b[1], soft:b[2]})).concat((W0.more || []).map(m => ({re:m[0], say:m[1], soft:m[2]})));
+  const miss = (shown, why) => {
+    S.wtry[n] = (S.wtry[n] | 0) + 1; S.fl.rub = (S.fl.rub | 0) + 1; save(); sBuzz();
+    if (left() > 0) return story("NOTEBOOK", [shown, why, S.fl.rub > 1 ? `You rub it out. The attendant watches you do it.` : `You rub it out.`], again);
+    story("NOTEBOOK", [shown, why, `You rub it out. The paper has gone grey and soft there. It won't take the pencil again.`, `<r>Line ${n} stays empty.</r> Whatever ${n === LAST ? "you are" : "today proved"}, you can't say it for certain.`], () => settle(0));
+  };
+  const say0 = raw => miss(`You write: <b>${pre} ${safe(raw).toUpperCase().slice(0, 24)}.</b>`, `It looks wrong the moment it is on the paper. Your hand knows, even if you don't.`);
+  const say = raw => {
+    let t = norm(raw); const p0 = norm(pre);
+    if (t.length > p0.length && t.startsWith(p0)) t = t.slice(p0.length);
+    if (/^(hint|help)$/.test(t)) return hint();
+    if (!t){ sBuzz(); return setStatus(W0.bank ? (COARSE ? "Tap a word, or type one." : "Click a word, or type one.") : "Write the name. Nobody else can.", R, 6000); }
+    if (W0.ok.test(t)) return settle(1);
+    if (n === LAST && t === norm(S.name)){ return story("NOTEBOOK", [`You write: <b>${pre} ${safe(S.name).toUpperCase()}.</b>`, `That is the name on the card. The card is three years old. You are older than three.`, `You leave it, and write on underneath.`], again); }
+    const hit = outs.find(o => o.re.test(t));
+    if (!hit && W0.bank){ sBuzz(); return setStatus("The pencil stops. Use a word from below.", R, 6000); }
+    if (!hit) return say0(raw);
+    const shown = `You write: <b>${pre} ${hit.lab || safe(raw).toUpperCase().slice(0, 24)}.</b>`;
+    if (hit.soft) return story("NOTEBOOK", [shown, hit.say, `You leave it standing, and start the line again underneath.`], again);
+    miss(shown, hit.say);
+  };
+  const paper = ["Two wrong words can be rubbed out.", "One more can be rubbed out.", "The paper is thin here. Be sure."][3 - left()];
+  story("NOTEBOOK", [["dh", n === LAST ? M : Y, n === LAST ? "THE LAST LINE" : "WRITE IT DOWN"], ["p", W0.ask], ["gap"]].concat(truthLines(n, null, 1), [["gap"],
+    W0.bank ? ["p", "Words from today's pages:"] : ["p", "<c>No words to choose from. This one is yours.</c>"],
+    W0.bank ? ["p", W0.bank.map(b => `<a c="${b[0].toLowerCase()}">${b[0]}</a>`).join(" <c>·</c> ")] : null, ["gap"], ["p", `<c>${paper}</c>`]]), null, null,
+    {prompt:{label:"Write", f:say}, chips:1, slow:left() === 3, coachMsg:W0.bank ? (COARSE ? "Tap the word that ends the line." : "Click the word that ends the line.") : "Type the name, then Enter.",
+     fast:[null, null, null, {l:"Hint", f:hint}], ghostW:n === LAST ? ["f. aster", "aster"] : null,
+     wl:{n, ok:word, bank:(W0.bank || []).map(b => ({w:b[0], ok:!b[1], soft:!!b[2]})), left:left()}});
+}
+/* the end of a day in the room: first you write the line, then you see where that leaves you */
 function sealCard(n, next){
-  sSolve();
-  glitch(500, () => story("NOTEBOOK", [["dh", Y, `DAY ${n} IS OVER`], ["gap"], ["p", "<c>What you know for certain:</c>"], ["gap"]].concat(truthLines(n, "g"), [["gap"],
-    ["p", n < 5 ? `<c>${NUMW[6 - n]} still sealed.</c>` : "<c>One still sealed.</c>"], ["gap"], ["p", HOOK[n], Y]]), next));
+  S.wr = S.wr || {}; S.wtry = S.wtry || {};
+  const card = () => { sSolve(); glitch(500, () => story("NOTEBOOK", n === LAST ? [["dh", M, "THE LAST LINE"], ["gap"]].concat(truthLines(6, "m"), [["gap"],
+      ["p", wrote(6) ? "Nothing is left to write. You find you would give a great deal not to know one of them." : "The line stays empty. It makes no difference. The page has said it for you."]])
+    : [["dh", Y, `DAY ${n} IS OVER`], ["gap"], ["p", "<c>What you know for certain:</c>"], ["gap"]].concat(truthLines(n, "g"), [["gap"],
+      ["p", n < 5 ? `<c>${NUMW[6 - n]} lines still to write.</c>` : "<c>One line still to write.</c>"], ["gap"], ["p", HOOK[n], Y]]), next)); };
+  if (S.wr[n] != null) return card();
+  writeLine(n, card);
 }
 
 /* ---------- days ---------- */
@@ -1828,7 +1935,7 @@ const LOUD = 5;                                                              /* 
 const HEAT = {vey1:1, vey2:1, name:1, sign:1, van:1, clerk:1, call:2, red:1, lshop:1, lsquare:1, lward:2, lpress:1, lharb:1};      /* how loud you have been */
 const IVO = {said:1, knock:1, told:2};                                       /* how often his old name went through a thin wall */
 const tally = T0 => Object.keys(T0).reduce((n, k) => n + (S.fl[k] ? T0[k] : 0), 0);
-const heat = () => tally(HEAT) + Math.min(2, S.fl.caught | 0) + Math.min(2, S.fl.wander | 0) + Math.min(2, Math.floor((S.fl.asked | 0) / 2)), ivoGone = () => tally(IVO) >= 2, keyDead = () => heat() >= LOUD && !S.fl.named;
+const heat = () => tally(HEAT) + Math.min(2, S.fl.caught | 0) + Math.min(2, S.fl.wander | 0) + Math.min(2, Math.floor((S.fl.asked | 0) / 2)) + Math.min(1, Math.floor((S.fl.rub | 0) / 2)), ivoGone = () => tally(IVO) >= 2, keyDead = () => heat() >= LOUD && !S.fl.named;
 const flag = k => { S.fl[k] = 1; save(); };
 const TIMES = ["", "once", "twice", "three times", "four times", "five times"];
 const times = n => TIMES[n] || "too many times to count";
@@ -1989,6 +2096,7 @@ STEP.vey2 = function(){
       VEY("I don't write anything down. I have a stamp. I have never known why I carry this."),
       S.fl.proof ? `You unfold the proof and put it on the table between you. LEAK AT KALDER WORKS. He reads it the way an editor reads: once, fast, his lips moving at the headline. <g>"Print it,"</g> he says. Then he puts his hand over his mouth.`
         : `<g>"Print it,"</g> you say. They are the only two words of his that you know. He puts his hand over his mouth.`,
+      S.fl.secret ? `<g>"There was a next edition,"</g> you say. <g>"It had the readings. You kept it in the reader."</g> He nods before he knows that he is nodding.` : null,
       ["brk"], `He doesn't stamp the card. He sits for a long time. Through the wall, very faintly, somebody is kneading dough.`,
       VEY("I'll be on your street door on Wednesday night. I am always on your door. The Reading Room has a door too, on the east side. In all these years I have never once been put on that one."),
       `He goes down the stairs slowly, one hand on the wall, like a man in a house he used to live in.`], next); }}]);
@@ -2157,11 +2265,12 @@ EV.request = function(){
       ["p", "The attendant looks at the mark for a long time. Then at you. Then they lift the hinged cover on their terminal and type something you can't see."], ["gap"], ["p", "Your screen goes black."]],
       onEnd:() => glitch(1000, () => { S.read["317"] = 1; S.event = {name:"final"}; save(); sBell();
         show(sheet9Spec(() => story("rr", [`The same mark.`, `It has been at the top of your screen all week.`, `You read the page twice. The second time your hands are shaking.`],
-          () => glitch(500, () => story("NOTEBOOK", [["dh", M, "THE LAST SEAL"], ["gap"]].concat(truthLines(6, "m"), [["gap"], ["p", "Nothing is sealed now. You find you would give a great deal to have one of them back."]]), EV.final))))); })}, RR));
+          () => sealCard(6, EV.final)))); })}, RR));
   }}]);
 };
 EV.final = function(){
   S.event = {name:"final"}; S.sus = 100; save();
+  if (!S.wr || S.wr[LAST] == null) return sealCard(LAST, EV.final);
   const choose = () => story("rr", [S.fl.named ? `The brass key lies on the desk between you. The attendant is facing the wall.` : null,
     `Under your left hand is the EDIT key. Behind you is the door. It isn't locked. It never has been.`], null, [
     {t:"Press your card to the reader. Sign for calm.", f:() => leaveNote("calm")},
@@ -2226,6 +2335,7 @@ function fileDoc(kind){
   if (f.lharb) add(`Seen by Trust staff at the harbour. <b>Noted.</b>`, 1);
   if (f.wander) add(`Out of place after dark, ${times(f.wander)}. <b>Noted.</b>`, 1);
   if (f.asked) add(`Had the attendant type an answer for you, ${times(f.asked)}. ${f.asked > 1 ? "<b>Noted.</b>" : "Residents may ask."}`, f.asked > 1);
+  if ((f.rub | 0) > 1) add(`Seen rubbing out in a notebook, ${times(f.rub)}. <b>Noted.</b>`, 1);
   if (f.caught) add(`Caught with an uncalm page on your screen, ${times(f.caught)}. <b>Noted.</b>`, 1);
   if (f.clerk) add(`Asked the Housing Office about yourself. <b>Noted.</b>`, 1);
   if (f.red) add(`Reading Room lamp reached red. <b>Noted.</b>`, 1);
@@ -2233,13 +2343,15 @@ function fileDoc(kind){
   if (ivoGone()) add(`Used the name Kessel through a thin wall${tally(IVO) > 2 ? ", more than once" : ""}. T. Rell lost to the weather, Tuesday night. <b>4-13 is vacant. It has been vacant since Q.Y. 3.</b>`, 1);
   else add(`T. Rell, 4-13: calm. Bakes. ${f.said || f.knock ? "Heard his old name once, and let it go." : "Has never heard the name Kessel."}`);
   if (f.proof) add(`Removed one sheet from Press Street. Recovered. Filed with the others.`, 1);
+  add(`Kept a notebook, in pencil: ${linesKept()} of 6 lines. Recovered. <b>Pulped.</b>`, 1);
+  if (f.secret) add(f.lund ? `Called up an edition that was never printed. Officer Vey, before he was rested, asked a clerk for the readings of 18 March. <b>There are no readings of 18 March.</b>` : `Called up an edition that was never printed. <b>There is no such edition.</b> Reader 7 has been wiped.`, 1);
   if (f.named) add(`Addressed the attendant by a retired name. <b>The attendant has been rested.</b>`, 1);
   add(heat() >= LOUD ? `EDIT key, reader 7: <b>${f.named ? "disabled. Opened with a staff key." : "disabled on account of the above."}</b>` : `EDIT key, reader 7: left as found. The resident was quiet.`, heat() >= LOUD);
   return [["band", K, G, "HOUSING OFFICE", "FILE 4-12"], ["dh", W, `Resident 4-12, ${ord(RUN())} issue`], ["gap"]].concat(L, [["gap"], ["p", `<g>CLOSED: ${{calm:"signed for calm", copy:"taken at the Reading Room", corrected:"lost to the weather, as forecast", run:"returned from Gate 3"}[kind]}.</g>`]]);
 }
 function ending(kind){
   const r = RUN(), st = {readN:Object.keys(S.read).length, total:A.length, hints:S.hintsUsed}, gone = ivoGone(), file = fileDoc(kind);
-  const WHY = {call:"A man on a barge is still shaking.", lward:"You were found on the ward before your bed was made.", lharb:"The men on the barge saw you.", caught:"I have read a good deal over your shoulder this week.", lpress:"You put your foot through a step on Press Street.", lshop:"You stood too long at a vacant shop.", lsquare:"You were seen at the siren post.", sign:"Gold letters, in the street.", vey1:"You told my officer about your neighbour.", vey2:"You said a retired name to my officer.", van:"You followed a van.", name:"You said a retired name across a counter.", clerk:"You asked the clerk about yourself.", red:"You asked my readers for every wrong word there is."};
+  const WHY = {call:"A man on a barge is still shaking.", lward:"You were found on the ward before your bed was made.", lharb:"The men on the barge saw you.", caught:"I have read a good deal over your shoulder this week.", lpress:"You put your foot through a step on Press Street.", lshop:"You stood too long at a vacant shop.", lsquare:"You were seen at the siren post.", sign:"Gold letters, in the street.", vey1:"You told my officer about your neighbour.", vey2:"You said a retired name to my officer.", van:"You followed a van.", name:"You said a retired name across a counter.", clerk:"You asked the clerk about yourself.", red:"You asked my readers for every wrong word there is.", rub:"You rubbed out a good deal, for a calm reader."};
   const why = Object.keys(WHY).filter(k => S.fl[k]).slice(0, 2).map(k => WHY[k]).join(" ");
   META.endings[kind] = 1; META.names.push(S.name); META.names = META.names.slice(-2); META.runs = (META.runs || 0) + 1; saveMeta(); lsDel(LS);
   const day1 = [pic("home")].concat(gone ? [
@@ -2262,7 +2374,9 @@ function ending(kind){
     `<m>COPY COMPLETE.</m>`, S.fl.named ? `The attendant doesn't turn round. They heard the bar finish.` : `The attendant doesn't run. They don't have to. They watched the bar finish, and now they watch you.`,
     `<g>"Nobody reads page 100,"</g> they say${S.fl.named ? ", to the wall" : ""}. <g>"They just leave it on."</g>`,
     S.fl.named ? `They take you both on the steps outside, in daylight. The attendant is still holding the paper cup. It is empty. Neither of you says a name.` : `They take you on the steps outside, in daylight. No siren. For once they couldn't wait for the forecast.`,
-    `In four hundred thousand front rooms the set is on, as the set is always on. Tonight page 100 is magenta.`, ["brk"]].concat(week, [
+    `In four hundred thousand front rooms the set is on, as the set is always on. Tonight page 100 is magenta.`, ["brk"],
+    `Sheet 9. And under it, because there was room, the lines from your notebook. Only the ones you were sure of.`].concat(TRUTHS.map(([a, b], i) => wrote(i + 1) ? ["p", `<m>${a} ${b}</m>`] : null), [["gap"],
+    linesKept() < 6 ? `${NUMW[6 - linesKept()]} of the six ${linesKept() === 5 ? "is" : "are"} missing. Nobody in Vessen knows to miss ${linesKept() === 5 ? "it" : "them"}.` : `All six. It is the shortest newspaper ever printed in Vessen, and the only one in twenty-two years.`, ["brk"]], week, [
     `A fault on page 100 has been corrected. Residents who read page 100 on Wednesday night are asked to forget it.`,
     `<b>213</b> have reported that they have. The Administration is counting the rest.`,
     `Lost to the weather this week: <b>9,406</b>. The Sleep Lines are working day and night. The remainder will be welcomed in order.`, count])
@@ -2276,7 +2390,7 @@ function ending(kind){
     S = null;
     show({kind:"narr", pg:"---", label:"CALMFAX", doc:[["gap"], ["raw", bigText(T0[0], T0[1])], ["gap"],
       ["p", `You were F. Aster, the ${ord(r)} time. Lantern Row has been unlucky.`], ["gap"],
-      ["p", `<c>Pages read: ${st.readN} of ${st.total}. Hints: ${st.hints}. Endings found: ${Object.keys(META.endings).length} of 4.</c>`], ["gap"],
+      ["p", `<c>Pages read: ${st.readN} of ${st.total}. Hints: ${st.hints}. Endings found: ${Object.keys(META.endings).length} of 4. Secrets: ${META.secret ? 1 : 0} of 1.</c>`], ["gap"],
       META.note ? ["p", "Your line is concealed on a page in the reading room. The next one will find it."] : null, ["gap"],
       ["p", `<c>None of the four ends well. What you chose on the way decides how badly, and for whom.</c>`], ["gap"],
       ["p", `<g>Press Enter to begin again as the ${ord(r + 1)}.</g>`]], onEnd:titleView});
@@ -2329,7 +2443,7 @@ setInterval(() => {
 }, 250);
 kin.addEventListener("input", () => {
   if (painting) finishPaint();
-  if (S && !S.seen.ghost && ghost()){ S.seen.ghost = 1; setStatus(COARSE ? "The reader knows this card. Tap it." : "The reader knows this card. Press TAB.", M, 8000); wonder("The reader finishes words before I have typed them."); }
+  if (S && V && V.kind === "page" && !S.seen.ghost && ghost()){ S.seen.ghost = 1; setStatus(COARSE ? "The reader knows this card. Tap it." : "The reader knows this card. Press TAB.", M, 8000); wonder("The reader finishes words before I have typed them."); }
   refresh();
 });
 kin.addEventListener("keydown", e => {
