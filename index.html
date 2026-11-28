@@ -544,6 +544,8 @@ F.`,clue:"c_directive",clueOn:"reveal"},
  caption:`The night desk, from left: P. Lund, R. Achebe, <k>F. Aster</k> (works desk, still bandaged from the Kalder gates), and <k>Ivo Kessel</k>, who brings the bread.`,
  b:`Eighty years ago this paper was two pages and a borrowed press. Tonight it is twenty-four pages, and the same press.
 
+Night editor P. Lund, a pencil behind his ear as always, would say only two words for this article: "Print it."
+
 We asked our works reporter what keeps them at it. "Somebody has to read the small print," Aster said. "Usually it's the only print that matters."
 
 In August a <k>Kalder</k> security guard split Aster's left eyebrow open with a torch while Aster was photographing the tank yard. It will scar. Aster calls it a souvenir.
@@ -827,7 +829,10 @@ const QS = [
   react:[`Aster. F. Aster, works desk.`]},
  {id:"q13",ch:4,sum:"A guard split Aster's left eyebrow.",a:"left eyebrow",t:`A guard gave F. a scar. Where on the face?`,ans:["eyebrow","brow","lefteyebrow","leftbrow","theeyebrow","thelefteyebrow","theleftbrow","eyebrows","onthelefteyebrow","ontheeyebrow"],
   h:[`The newspaper printed a picture of its night desk. Type: <b>NEWSROOM</b>`,`Read page <b>602</b> to the end.`],
-  react:[`A split left eyebrow. "It will scar."`,`Your hand goes to your face before you can stop it.`,`And the second face from the left, R. Achebe. You have seen that face. On Saturday night, under a grey blanket, lifting one hand.`]},
+  react:[`A split left eyebrow. "It will scar."`,`Your hand goes to your face before you can stop it.`]},
+ {id:"qlund",ch:4,sum:"Officer Vey of the Calm Office was P. Lund, F.'s night editor.",a:"Lund",t:`The night editor keeps a pencil behind his ear. His surname?`,ans:["lund","plund","mrlund"],
+  h:[`It is in the same anniversary story. Type: <b>NEWSROOM</b>`,`Read page <b>602</b>, the second paragraph.`],
+  react:[`P. Lund, night editor. A pencil behind his ear, as always. "Print it."`,`A man with a pencil behind his ear sat at your kitchen table on Saturday and asked why you weren't sleeping.`,`He was F. Aster's editor for eleven years. He doesn't know it. And next to him in the picture, R. Achebe: Saturday night, a grey blanket, one hand lifted to your window.`,`They are all still here. Everybody F. ever worked with is still here.`]},
  {id:"q12",ch:4,sum:"Aster was taken from flat 4-12.",a:"4-12",t:`Which flat was F. taken from in Q.Y. 11?`,ans:["412","flat412"],
   h:[`The Bulletin reported the night the agitator was taken. Type: <b>AGITATOR</b>`,`Open page <b>261</b>, then press the <b>YELLOW</b> key.`],
   react:[`4-12.`,`You write it down. Then you look at it for a long time.`,`<b>4-12 is your flat.</b>`]},
@@ -883,7 +888,7 @@ const SLEEVES = {
 const SLEEVE_LEADS = {1:["weather","eastern works"],2:["census","week in calm"],3:["aster","newsroom"],4:["tins","trust","outside"]};
 
 /* search terms the attendant notices */
-const FLAGS = [["re-issue",14],["reissue",14],["directive",12],["sedition",12],["low tide",12],["sleep lines",12],["agitator",10],["aster",10],["withdrawn",10],["sheet",8],["4-12",8],["sector 5",8],["air office",8],["kalder",6],["morrow",6],["f.",6],["nursery",5],["born",4],["birth",4],["courier",4],["census",3],["trust",8],["fence",8],["oduya",8],["remediation",8],["ministry",8],["outside",6],["krt",6]];
+const FLAGS = [["re-issue",14],["reissue",14],["directive",12],["sedition",12],["low tide",12],["sleep lines",12],["agitator",10],["aster",10],["withdrawn",10],["sheet",8],["4-12",8],["sector 5",8],["air office",8],["kalder",6],["morrow",6],["f.",6],["nursery",5],["born",4],["birth",4],["courier",4],["census",3],["lund",8],["vey",6],["trust",8],["fence",8],["oduya",8],["remediation",8],["ministry",8],["outside",6],["krt",6]];
 
 const ASK = [
  [/kessel|ivo|baker|bread/,`"There's no Kessel on Lantern Row, resident. There's barely a Lantern Row."`,0],
@@ -904,6 +909,7 @@ const ASK = [
  [/ping|noon|floor|below|cellar|wire/,`"That will be the pipes, resident." The attendant doesn't look at the floor. It is the only place in the room they never look.`,4],
  [/dream|sleep\b|tired/,`"Residents don't dream. It was one of the first things we fixed." They look at you with real interest for the first time.`,4],
  [/box ?40|tomorrow/,`"Box 40 has one reply in it. It has had one reply in it for some time." They do not offer to fetch it.`,2],
+ [/vey|officer|calm office|lund|pencil|assess/,`"Officer Vey is very thorough. He was a great reader himself once, I believe. He doesn't remember it." The attendant smiles. "None of the thorough ones do."`,4],
  [/mark|card|lamp/,`"Every card has a mark. Yours is a very familiar one."`,2],
  [/you|name|attendant|yourself/,`"I'm the attendant. I've always been the attendant. I like it here. It's quiet."`,0],
  [/help|how|what do/,`"Type a word. Read the page. Don't take anything to heart."`,0]
@@ -1819,7 +1825,7 @@ const EV = {}, STEP = {};
 function go(id){ S.event = {name:"step", id}; save(); STEP[id](); }
 /* what you did outside the reading room. Each of these can only count once, so a scene can be replayed from a save. */
 const LOUD = 5;                                                              /* this loud, and they take the EDIT key out of reader 7 */
-const HEAT = {name:1, sign:1, van:1, clerk:1, call:2, red:1, lshop:1, lsquare:1, lward:2, lpress:1, lharb:1};      /* how loud you have been */
+const HEAT = {vey1:1, vey2:1, name:1, sign:1, van:1, clerk:1, call:2, red:1, lshop:1, lsquare:1, lward:2, lpress:1, lharb:1};      /* how loud you have been */
 const IVO = {said:1, knock:1, told:2};                                       /* how often his old name went through a thin wall */
 const tally = T0 => Object.keys(T0).reduce((n, k) => n + (S.fl[k] ? T0[k] : 0), 0);
 const heat = () => tally(HEAT) + Math.min(2, S.fl.caught | 0) + Math.min(2, S.fl.wander | 0) + Math.min(2, Math.floor((S.fl.asked | 0) / 2)), ivoGone = () => tally(IVO) >= 2, keyDead = () => heat() >= LOUD && !S.fl.named;
@@ -1941,7 +1947,51 @@ STEP.house = function(){
     {t:"the Register", w:/register|ledger|book/, r:[`4-12: that's you. <b>ARRIVED Q.Y. 19, FROM SECTOR 5.</b>`, `You don't remember arriving. You have never thought about it before.`]}],
     () => { at("THU 11:00"); story("housing", [`It is all in the back pages, F. wrote.`,
       `Every set in Vessen shows Calmfax: this week's pages, and nothing older. But the readers in the Civic Reading Room hold all of it. Every Bulletin since Year 0. Every newspaper from before. Any resident may use them. Nobody does.`,
-      `It is closed on Thursdays. It opens at nine tomorrow. You will be there at nine.`, `That evening there is no bread on your mat. There has been bread on your mat every Thursday for three years.`], () => go("dr0")); }, {ask:"Ask about"});
+      `It is closed on Thursdays. It opens at nine tomorrow. You will be there at nine.`], () => go("note1")); }, {ask:"Ask about"});
+};
+const NOTE = t => `<m>${t}</m>`;
+STEP.note1 = function(){
+  at("THU 21:30", 1);
+  story("home", [pic("home"), `There is no bread on your mat this evening. There has been bread on your mat every Thursday for three years.`,
+    `You sit at the table with the sheet from behind the radiator. You must have slept, because the set says 21:30, and a ration form is lying just inside your door, folded once. Block capitals, in pencil:`, NOTE("HE IS NOT DEAD. DON'T MAKE A NOISE ABOUT IT."),
+    `No name. You open the door. The landing is empty, the stairs are empty, and the door of 4-13 is still standing open on nothing.`,
+    `Somebody knows what you did today. Somebody knows more than you do.`], () => { wonder("Somebody pushes notes under my door. Who knows what I am doing?"); go("dr0"); });
+};
+/* Officer Vey of the Calm Office. What you tell him is remembered, and so is who he was. */
+const VEY = t => `<b>VEY:</b> <g>"${t}"</g>`;
+STEP.vey1 = function(){
+  at("SAT 19:30");
+  const out = () => story("home", [`He stands. At the door he stops, and looks at the wall you share with 4-13 for a moment too long.`,
+    VEY("Thin walls. There used to be a smell on this landing. I can't think what."), `He shakes it off, the way you shake off a dream.`,
+    `He leaves a card on your table: <b>REST ASSESSMENT. WEDNESDAY, 23:10. THE RESIDENT IS ASKED NOT TO GO ANYWHERE.</b>`,
+    ["brk"], `You sit on at the table after he has gone. When you look up, the set says an hour has passed, and you can't account for the hour. A folded ration form is lying on the mat. Block capitals, in pencil:`, NOTE("YOU KNOW HIS FACE."),
+    `You don't. You are almost sure you don't.`], () => go("night2"));
+  const q2 = () => story("home", [S.fl.sign ? VEY("On Friday somebody uncovered a shop sign on your street. Gold letters. Did you read them?") : S.fl.mina ? VEY("This afternoon you spoke to reader 2 in the square. What about?") : VEY("You have spent two days in the Reading Room. What is it you read there?")], null, [
+    {t:`"Old weather. I find it restful."`, f:() => story("home", [VEY("So do I."), `He means it. For a moment he looks like a man who would like to stay and talk about the weather. Then he looks at the stamp in his hand.`], out)},
+    {t:`"I am looking for Ivo Kessel."`, risk:1, f:() => { flag("vey2"); story("home", [`He presses the stamp on the card. Once. The sound is very small.`, VEY("That name isn't in use, resident. I would rest, if I were you. I would rest before Wednesday.")], out); }}]);
+  story("home", [pic("home"), `Three knocks at your door. Not two.`,
+    `A tired man in a grey coat, with a pencil behind his ear and a rubber stamp in his hand. ` + VEY("Officer Vey, Calm Office. A routine assessment, resident. May I sit?"),
+    `He sits at your kitchen table as if he knew which chair was his. He clips a reader to your wristband and looks at the number for some time.`,
+    VEY("0.58. The district is at 0.71. You reported an empty flat on Thursday. Why was that?")], null, [
+    {t:`"Because it was empty."`, f:() => story("home", [`He nods, and writes nothing. The pencil stays behind his ear. He has a stamp, and he doesn't use that either.`], q2)},
+    {t:`"Because a man lived in it on Tuesday."`, risk:1, f:() => { flag("vey1"); story("home", [VEY("Nobody lived in it on Tuesday, resident."), `He says it gently, like a man correcting a child's sum. Then he presses the stamp on a card. Once.`], q2); }}]);
+};
+STEP.vey2 = function(){
+  at("TUE 21:00", 1);
+  const next = () => go("h_harb");
+  story("home", [pic("home"), `Three knocks.`,
+    `Officer Vey sits down in the same chair. The pencil is behind his ear. ` + VEY("Last visit before Wednesday, resident. 0.44. You are not sleeping."),
+    `P. Lund, night editor. He sat across a desk from F. Aster for eleven years and said: print it. Now he sits across your kitchen table, and he doesn't know either of you.`,
+    ["brk"], VEY("Is there anything you want to tell me?"), `The pencil. The chair he chose. You could say his name.`], null, [
+    {t:`"No, officer. I am quite calm."`, f:() => story("home", [VEY("Good."), `He stamps the card.`, VEY("I'll be on your street door on Wednesday night. I always am."), `He doesn't hear what he has just said. You do.`], next)},
+    {t:`"Your name is Lund. You were night editor of the Courier."`, risk:1, f:() => { flag("lund"); story("home", [
+      `He takes the pencil from behind his ear and looks at it, as if somebody else had put it there.`,
+      VEY("I don't write anything down. I have a stamp. I have never known why I carry this."),
+      S.fl.proof ? `You unfold the proof and put it on the table between you. LEAK AT KALDER WORKS. He reads it the way an editor reads: once, fast, his lips moving at the headline. <g>"Print it,"</g> he says. Then he puts his hand over his mouth.`
+        : `<g>"Print it,"</g> you say. They are the only two words of his that you know. He puts his hand over his mouth.`,
+      ["brk"], `He doesn't stamp the card. He sits for a long time. Through the wall, very faintly, somebody is kneading dough.`,
+      VEY("I'll be on your street door on Wednesday night. I am always on your door. The Reading Room has a door too, on the east side. In all these years I have never once been put on that one."),
+      `He goes down the stairs slowly, one hand on the wall, like a man in a house he used to live in.`], next); }}]);
 };
 STEP.shop = function(){
   at("FRI 18:20");
@@ -1977,7 +2027,7 @@ STEP.square = function(){
     {t:"the stone", w:/stone|plate|brass|number/, r:[`POPULATION OF VESSEN: <b>412,000</b>. A new brass plate is screwed on every year. Every plate says the same number.`]},
     {t:"the young woman", w:/woman|bench|girl|bread/, go:mina},
     {t:"the grey box", w:/box|siren|post|grey|gray/, key:1, r:[`It isn't locked. Nobody would dare. Inside: a clockwork wheel with one peg in it, and a label: <b>WED 23:10</b>.`, `Weather doesn't keep appointments. Clerks do.`]}],
-    () => go("night2"),
+    () => go("vey1"),
     {time:3, meter:"WARDEN", flag:"lsquare", late:[`The warden has come all the way round, and is walking straight at you, not hurrying.`,
       `You walk past the siren post as if you were going somewhere, and lift the lid of the grey box with one finger as you pass. A clockwork wheel with one peg in it, and a label: <b>WED 23:10</b>.`,
       `Weather doesn't keep appointments. Clerks do. The warden watches you all the way out of the square, and then writes.`]});
@@ -2035,7 +2085,10 @@ STEP.flat = function(){
   story("home", [pic("home"), `A grey van is parked outside block 4, engine off. You go up the stairs without looking at it.`, `In the mirror by the door: a scar through your left eyebrow. A thin white line. You have always had it.`,
     `<c>RESIDENT CARD. ${safe(S.name).toUpperCase()}. FLAT 4-12. ARRIVED Q.Y. 19, FROM SECTOR 5. MARKS: SCAR, LEFT BROW (CHILDHOOD FALL).</c>`,
     `You try to remember your childhood. You remember the word childhood.`, wonder("I can't remember being a child. I remember the word.") || null],
-    () => look("home", "The number is under the kitchen table. Search your own flat.", [`You have lived here for three years. You have never searched it. A wardrobe. A kitchen table. And the wall you share with 4-13, where you could knock.`], [
+    () => look("home", "The number is under the kitchen table. Search your own flat.", [`You have lived here for three years. You have never searched it. A wardrobe. A kitchen table. A pencil stub on the windowsill. And the wall you share with 4-13, where you could knock.`], [
+      {t:"the pencil", w:/pencil|stub|sill|window|pad/, f:() => wonder("The notes under my door were pressed through a pad that is in my own flat."), r:[`A pencil stub, chewed at the end. You don't chew pencils. Under it a pad of ration forms, the top sheet blank. You tilt it to the light of the set.`,
+        `Dents. Block capitals, pressed through from sheets that are gone. ` + NOTE("HE IS NOT DEAD.") + ` ` + NOTE("YOU KNOW HIS FACE."),
+        `The notes under your door were written here. At this windowsill. With this pencil.`, `And under them a third, that hasn't come yet: ` + NOTE("DON'T SIGN. WRITE.")]},
       {t:"the wardrobe", w:/wardrobe|drawer|clothes|pocket/, r:[`Every drawer, every box, every pocket. The oldest thing you own is a ration book from Q.Y. 19, in mint condition.`, `Somebody gave you a life with the tags still on.`]},
       {t:"the wall", w:/wall|knock|4-?13/, risk:1, f:() => flag("knock"), r:[`You knock twice. A long pause. Two knocks back.`, `Then, very low, through the plaster, one word: <g>"Don't."</g>`, `He is right. The walls are thin, and you are not the only one listening to them.`]},
       {t:"the kitchen table", w:/table|kitchen|under/, key:1, r:[`Taped to the underside, where nobody would ever look: a reader card. Not yours. The name has been scratched off. The mark is still on it: [mark]`, `On the back, in pencil: <m>SHEET 9 IS UNLISTED. ITS NUMBER IS THE DAY THE COURIER DIED.</m>`, `The card fits your hand exactly. There's a dent worn into one edge, where a thumb goes. Your thumb goes there.`]}],
@@ -2043,7 +2096,7 @@ STEP.flat = function(){
 };
 STEP.tin = function(){
   at("TUE 18:30");
-  const next = () => go("h_harb");
+  const next = () => go("vey2");
   const knock = () => { at("TUE 19:10"); story("home", [`Two knocks at the door. Tomas Rell, with a loaf wrapped in newspaper, and flour on his cuffs.`,
     `<g>"I baked too much. I don't know why I bake at all. They told me I was a clerk."</g> He holds out the loaf. He is waiting for something, and doesn't know what.`], null, [
     {t:"Tell him. His name, the bakery, the ribbons at the Harbour Fair.", risk:1, f:() => { flag("told"); story("home", [`You tell him. Ivo Kessel. Four blue ribbons for rye. A shop three doors down, with gold letters under the paint.`, `He listens with his whole face. <g>"Kessel,"</g> he says, trying it, like a key in a lock. Something turns.`, `<g>"You used to write,"</g> he says. Then, frightened: <g>"Why do I know that?"</g>`, `The walls are thin. You both remember it at the same moment.`], next); }},
@@ -2077,7 +2130,10 @@ STEP.wedmorn = function(){
     `<g>"Vacant since Year 3, resident,"</g> the warden says, without turning round. <g>"You'll be remembering incorrectly."</g>`,
     `No siren this time. They don't need a siren for one. They only needed to hear his old name through a thin wall, in your voice.`] : [
     `There is a loaf on your mat, wrapped in newspaper, still warm.`, `Through the wall, Tomas Rell is whistling something. He stops in the middle, as if he had caught himself.`],
-    [`It is Wednesday. Tonight at 23:10 the siren goes on Lantern Row. You know whose flat it is for.`, `The grey van is at your street door now. Nobody is in it. Nobody needs to be in it until tonight.`]), () => go("h_d6"));
+    [["brk"], `On the mat there is a third note. Block capitals, in pencil: ` + NOTE("DON'T SIGN. WRITE."),
+     `Nobody pushed it under the door. The door was bolted from inside all night. The capitals lean the way your own hand leans. You have known that since the first one, and have not let yourself know it.`,
+     `There is lead on the side of your right hand.`,
+     `It is Wednesday. Tonight at 23:10 the siren goes on Lantern Row. You know whose flat it is for.`, `The grey van is at your street door now. Nobody is in it. Nobody needs to be in it until tonight.`]), () => go("h_d6"));
 };
 
 EV.warn1 = function(){
@@ -2110,7 +2166,9 @@ EV.final = function(){
     `Under your left hand is the EDIT key. Behind you is the door. It isn't locked. It never has been.`], null, [
     {t:"Press your card to the reader. Sign for calm.", f:() => leaveNote("calm")},
     {t:"Press EDIT. Copy page 317 onto page 100, the page every set in Vessen is showing.", f:() => keyDead() ? ending("corrected") : leaveNote("copy")},
-    {t:"Stand up. Walk out, and east, to the fence.", f:() => leaveNote("run")}].concat(S.fl.named ? [] : [
+    S.fl.stopped ? null : {t:"Stand up. Walk out, and east, to the fence.", f:() => S.fl.lund ? leaveNote("run") : (flag("stopped"), story("rr", [`You stand up. The street door opens before you reach it.`,
+      `Officer Vey, with the pencil behind his ear and rain on his coat. ` + VEY("Wednesday, resident. I did ask you not to go anywhere."),
+      `He walks you back to reader 7, and stays, standing behind your chair. There is no door now. There is the card, and there is the key.`], choose))}].filter(Boolean).concat(S.fl.named ? [] : [
     {t:`Say: "If the water shakes, read it again. Dr Oduya."`, f:() => { flag("named"); story("rr", [`The attendant's hand stops over the keys.`,
       `<g>"That name isn't in use,"</g> they say. But they are looking at the paper cup. The water in it is shaking.`,
       `Then, very quietly, as if reading it off the surface: <g>"Say so. Loudly. That is the whole job."</g>`,
@@ -2137,7 +2195,8 @@ function leaveNote(kind){
 function runOut(){
   const r = RUN();
   at("WED 21:10", 1);
-  story("east", [pic("east"), `Nobody stops you. That is the worst of it. The wardens on Candle Street look at their boots as you pass.`,
+  story("east", [pic("east"), `You go out by the east door. Officer Vey is standing beside it with his back to you. He has the pencil in his hand, and he is writing something very small on the door frame. He doesn't turn round.`,
+    `Nobody stops you. That is the worst of it. The wardens on Candle Street look at their boots as you pass.`,
     `At nine the east gate opens for the vans. You walk through it like a van.`,
     `Morrow Flats. The sanatorium with its one lit door. The works under their concrete, and a bird asleep on the warning sign. There is no cloud. There never was. You keep walking.`],
     () => story("fence", [pic("fence"), `Past the works there is a fence. F. was right about the fence.`, `It runs out of sight both ways, twice your height, and every fifty paces a sign is wired to it. The signs face outward. From here you can only read them backwards.`, `Beyond the wire there is a road. A real one, with a white line down the middle, going somewhere.`], null, [{t:"Climb.", f:() =>
@@ -2158,6 +2217,9 @@ function fileDoc(kind){
   if (f.name) add(`Said a retired name at the Housing Office. <b>Noted.</b>`, 1);
   if (f.sign) add(`Uncovered the sign of Kessel's Bakery. <b>Noted.</b> Painted over on Saturday.`, 1); else if (f.shop) add(`Scratched a shop sign. Four letters. Left as found.`);
   if (f.mina) add(`Spoke to M. Hale, 18, in the square. She began to search. Lost to the weather, Sunday night. <b>She had never been re-issued before. She was the last person in Vessen who remembered being a child.</b>`, 1); else add(`M. Hale, reader 2: steady. Still reading her one page.`);
+  if (f.vey1 || f.vey2) add(`Told Officer Vey about a neighbour${f.vey1 && f.vey2 ? ", twice" : ""}. <b>Noted.</b>`, 1);
+  if (f.lund) add(`Addressed Officer Vey by a retired name. <b>Officer Vey has been rested.</b> Two words in pencil have been cleaned off the east door of the Reading Room.`, 1);
+  if (f.stopped) add(`Tried the door on Wednesday. Officer Vey was on it, as always.`, 1);
   if (f.van) add(`Followed a Sector 5 van after dark. <b>Noted.</b>`, 1);
   if (f.lshop || f.lsquare || f.lpress) add(`Seen loitering: ${[f.lshop && "a vacant shop", f.lsquare && "the siren post", f.lpress && "Press Street"].filter(Boolean).join(", ")}. <b>Noted.</b>`, 1);
   if (f.lward) add(`Found awake on the Sleep Lines before your bed was ready. <b>Noted twice.</b>`, 1);
@@ -2177,7 +2239,7 @@ function fileDoc(kind){
 }
 function ending(kind){
   const r = RUN(), st = {readN:Object.keys(S.read).length, total:A.length, hints:S.hintsUsed}, gone = ivoGone(), file = fileDoc(kind);
-  const WHY = {call:"A man on a barge is still shaking.", lward:"You were found on the ward before your bed was made.", lharb:"The men on the barge saw you.", caught:"I have read a good deal over your shoulder this week.", lpress:"You put your foot through a step on Press Street.", lshop:"You stood too long at a vacant shop.", lsquare:"You were seen at the siren post.", sign:"Gold letters, in the street.", van:"You followed a van.", name:"You said a retired name across a counter.", clerk:"You asked the clerk about yourself.", red:"You asked my readers for every wrong word there is."};
+  const WHY = {call:"A man on a barge is still shaking.", lward:"You were found on the ward before your bed was made.", lharb:"The men on the barge saw you.", caught:"I have read a good deal over your shoulder this week.", lpress:"You put your foot through a step on Press Street.", lshop:"You stood too long at a vacant shop.", lsquare:"You were seen at the siren post.", sign:"Gold letters, in the street.", vey1:"You told my officer about your neighbour.", vey2:"You said a retired name to my officer.", van:"You followed a van.", name:"You said a retired name across a counter.", clerk:"You asked the clerk about yourself.", red:"You asked my readers for every wrong word there is."};
   const why = Object.keys(WHY).filter(k => S.fl[k]).slice(0, 2).map(k => WHY[k]).join(" ");
   META.endings[kind] = 1; META.names.push(S.name); META.names = META.names.slice(-2); META.runs = (META.runs || 0) + 1; saveMeta(); lsDel(LS);
   const day1 = [pic("home")].concat(gone ? [
